@@ -1,0 +1,233 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{polski}
+\usepackage{textcomp}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{amsthm}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{frame=tb,
+	language=Bash,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	escapeinside={(*}{*)},          % if you want to add LaTeX within your code
+	tabsize=4
+}
+
+\title{Notatki z Metod numerycznych }
+\author{Jacek Olczyk}
+\date{October 2018}
+
+\begin{document}
+	\maketitle
+	\part{Wykład}
+	\section{Rozwiązywanie układów równań liniowych}
+	\paragraph{Znane metody}
+	\begin{itemize}
+		\item $Ax=b, A\in\mathbb R^{n\times n}$
+		\item Algorytm rokładem LU (elim. Gaussa) z wybraniem el. gł $O(\frac{2}{3}N^3)$.
+		\item 1. złota myśl numeryka: Co zrobić jeśli zadanie jest za trudne? Zmienić zadanie
+		\item Zamiast rozwiązywać układ równań, przybliżamy go
+		\item Czy da się szybciej niż Gauss, który jest $O(n^3)$? To jak nisko da się zejść to problem otwarty, ale istnieją algorytmy lepsze niż sześcian.
+	\end{itemize}
+
+\section{Przybliżone rozwiązywanie układów równań}
+\begin{itemize}
+	\item Niech $ A=M-Z $, wtedy $ Ax=Mx-Zx=b $, zatem $ Mx=Zx+b $
+	\item TODO Metoda iteracji prostej Banacha $Mx_{n+1} = Zx_{n}+b$
+	\item Jeśli wybierzemy $ M $ tak, by układ z macierzą $ M $ można było tanio rozwiązać, wtedy iteracja też będzie tania
+	\item Chcemy, żeby $ M $ było dobrym przybliżeniem $ A $, ale nie aż tak łatwo że 
+	\item Metoda Jacobiego $$a_{kk}x_{k}^{n+1}=b - \sum_{j\not=k} a_{kj}x_{j}^n$$
+	\item inny pomysł, metoda Gaussa-Seidela: $a_{kk}x_k^{(n+1)} = b_k - \sum_{j<k}a_{kj}x_{j}^{(n+1)} - \sum_{j >k}a_{kj}x_{j}^{(n)}$
+	\item Uwaga: fakt życiowy. Gdy $n$ jest bardzo duże, wówczas w $A$ jest zazwyczaj bardzo dużo zer, o ile układ pochodzi z $\text{REAL LIFE}^{TM}$. 
+	\item To oznacza, że ilość elementów różnych od $0$ jest rzędu $O(n)$. Mówimy wtedy że macierz jest rzadka.
+	\item Wniosek: Jeśli $ A $ ma $ O(n) $ niezerowych elementów, to mnożenie $Ax$ kosztuje też $ O(n) $. Ponadto, rozwiązanie układu z macierzą dolnotrójkątną też jest $ O(n) $
+	
+\end{itemize}
+\section{Normy macierzowe i wektorowe}
+\paragraph{Normy wektorowe}
+$$ ||x||_{p}:=(\sum_{i=1}^{N}|x_i|^p)^\frac1p $$
+$$ ||x||_\infty:=\max_i |x_i| $$
+\paragraph{Norma macierzowa}
+$$ ||A||_p := \max_{x\not=0}\frac{||Ax||_p}{||x||_p}=\max_{||x||_p}||Ax||_p $$
+\paragraph{Własności normy macierzowej}
+\begin{enumerate}
+	\item $$||Ax||\leq||A||\dotsm||x|| \forall_{x\in\mathbb{R}^n}$$
+	\item $$ ||Ax|| $$ - nie dało się przeczytać tablicy
+	\item tu też coś było :(
+\end{enumerate}
+
+\section{Warunek wystarczający zbieżności klasycznej metody iteracyjnej ($A=M-Z$)}
+\begin{equation}
+Mx_{k+1}=b+Zx_k\tag{$*$}
+\end{equation}
+Niech $x^*$ będzie dokładnym rozwiązaniem $Ax^*=b$
+$$x_{k+1}=M^{-1}(b-Zx_k)$$
+$$x_{k+1}-x^*=M^{-1}(b-Zx_k)-x^*$$
+$$=M^{-1}(Ax^*-Zx_k)-x^*$$
+$$=M^{-1}(Ax^*-(M-A)x_k)-x^*$$
+$$=M^{-1}Ax^*+(I-M^{-1}A)x_k)-x^*$$
+$$=-(I-M^{-1}A)x^*+(I-M^{-1}A)x_k)-x^*$$
+$$=(I-M^{-1}A)(x^k-xu^*)$$
+Czyli $B$ pomnożont błąd $k$-ty.\\
+Czyli $ x_{n+1}-x^*=B(x_k-x^*)=B^2(x_k-x^*)\ldots=B^{k+1}(x_0-x^*) $
+
+\paragraph{Wniosek:} Jeśli $ ||B||<1 $, to $(*)$ zbieżna do $x*$ dla dow. $x_0\in \mathbb{R}^N$
+
+\paragraph{Twierdzenie:} Metoda $ (*) $ jest zbieżna do $ x^* $ z dowolnego $ x_0 $ wtw gdy $ \rho(B)<1 $ 
+ gdzie $ \rho(B)=\max\{|\lambda|:\lambda \text{ jest wartością własną }B\} $ - promień spektralny macierzy $ B $
+ Dowód pominięty
+
+\paragraph{Twierdzenie:} Jeśli macierz $ A $ jest ściśle diagonalnie dominująca, tzn zachodzi
+$ |a_n|>\sum_{j\not=i}|a_{ij}|\text{ dla }i=1..N $
+ to metoda Jacobiego jest zbieżna (dla dowolnych $ x_n\in R^n $)
+\begin{proof}
+	Zbadajmy macierz iteracji.
+	$$ ||B||_\infty = ||I-M^{-1}A||_\infty $$
+	$ M^-1 $ dla macierzy diagonalnej to podnoszenie wszystkich elementów do $ -1 $.\\
+	$ M^{-1}A=I $ + macierz z zerami na diagonali i ułamkami na reszcie, pierwszy wiersz to $ 0, a_{12}/a_{11}, a_{13}/a_{11}\ldots $\\
+	Żeby uzyskać $ B $ odejmujemy $I$.\\
+	$ ||B||_\infty = \max_i w_i  $\\
+	$ w_i = \sum_j |b_{i,j}|=\sum_{j\not=i}|a_{ij}/a_{ji}|=\frac1{|a_{ii}|}\sum_{j\not=i}|a_{ij}|<1 $
+	zatem norma $ B $ jest mniejsza od 1 więc normy są zbieżne.
+\end{proof}
+
+\section{Metody iteracyjne oparte na normalizacji w przestrzeni Kryłowa}
+\paragraph{$k$-ta przestrzeń Kryłowa}
+$$ K_k = {r_0, Ar_0, ...,A^{k-1}  r_0} $$ 
+gdzie $ r_k:=b-Ax_k $ - reszta na $ k $-tej iteracji
+\paragraph{Metoda iteracyjna}
+\begin{itemize}
+	\item $ x_k+1 \in K_k $ przesunięta o $ x_0 $
+	\item $ x_k+1 $ normalizuje pewną miarę błędu na $ x_0+K_k $
+	\item Na przykład: $$ ||x_k-X^*||_C\leq ||y-x^*||_C \forall_{y\in x_0+K_k} $$
+	lub $$ ||r_k||\leq ||b-Ay||_C \forall_{y\in x_0+K_k} $$
+	gdzie $ C =C^T>0 $
+\end{itemize}
+
+\subsection{Metoda gradientów sprzężonych (CG - Conjugate Gradient) dla macierzy $A=A^T>0$}
+\subsubsection{Fakty o macierzach symetrycznych i dodatnio określonych}  
+
+Niech $A = A^T>0$ (symetryczna i dodatnio określona, a co za tym idzie $x^TAx>0\text{ dla }x\not=0$). Wtedy:
+\begin{enumerate}
+	\item Wartości własne są rzeczywiste a wektory własne są ortogonalne (czyli $ A=Q\Lambda Q^T $, gdzie $ Q $ jest ortogonalna, a $ \Lambda $ jest diagonalna)
+	\item $ ||x||_A:=\sqrt{x^TAx} $ określa normę wektorową (norma energetyczna indukowana przez $ A $)
+\end{enumerate}
+Iterację metody gradientów sprzężonych definiujemy następująco:
+$$ x_{k+1}\in x_0 + K_k $$
+$$ ||x_{k+1}-x^*||_A\leq ||y-x^*||_A\forall_{y\in x_0+K_k} $$
+Ale przecież potrzebujemy mieć rozwiązanie żeby to zrobić!
+\paragraph{Fakt.} Można stąd wyprowadzić algorytm iteracyjny, który na podstawie kilku poprzednio wyznaczonych wektorów wyznaczy $ x_{k+1} $ kosztem jednego mnożenia przez macierz $ A $ i $ O(N) $
+\paragraph{Twierdzenie.} Po $ k $ iteracjach metody CG błąd $ ||x_k-x^*||_A \leq 2(\frac{\sqrt{\alpha}-1}{\sqrt{\alpha}+1})^k ||x_0-x^*||_A $
+gdzie $ \alpha = \lambda_{max}(A)/\lambda_{min}(A) $.
+
+
+
+
+\part{Ćwiczenia}
+\section{Układy nadokreślone - kontynuacja}
+\subsection{Zadanie 1.}
+\paragraph{Macierz Hessenberga} - to macierz trójkątna górna, z tym że niezerowe elementy mogą być jeden element pod diagonalą.
+$$\begin{Bmatrix}
+	x&\ldots&x&x\\x&x&\ldots&x\\&x
+\end{Bmatrix}$$
+Jak najmniejszym kosztem znaleźć rozkład $ QR $ tej macierzy?
+Metodą Householdera? Nie ma jak wykorzystać zer na dole.
+Obrotami Givensa. 
+\subsubsection{Obroty Givensa - przypomnienie}
+$ G_{ij} $ - macierz Givensa
+$ b=G_{ij}a, b_j=0 $
+$ \cos\phi = \frac{a_i}{\sqrt{a_i^2+a_j^2}} $
+$ \sin\phi = \frac{a_j}{\sqrt{a_i^2+a_j^2}} $
+\subsubsection{Zamiana macierzy Hessenberga w górnotrójkątną obrotami Givensa}
+$$ (G_{ij}a)_j = -\frac{a_ia_j}{\sqrt{a_i^2 + a_j^2}}+\frac{a_ia_j}{\sqrt{a_i^2 + a_j^2}}=0$$
+$$G_{n-1\ n}\ldots G_{i\ i+1}\ldots G_{12}A=R$$
+\subsubsection{Koszt}
+Robimy $ n-1 $ iteracji.
+Dla $ G_{i\ i+1} $ trzeba wykonać jeden pierwiastek, $ w_i =cw_i+sw_{i+1}$ oraz $w_{i+1} = -sw_i + cw_{i+1}$, łącznie $4(n-1) $ mnożeń.
+Łącznie $4\sum_{i=1}^{n-1}n-i=4\sum_{i=1}^{n-1}i=\frac{4n(n-1)}{2}\sim2n^2$
+\subsection{Zadanie 2.}
+Dane są punkty $(-1, -1), (0,2), (1, 0), (2, 1)$.
+Znajdź prostą $ y=ax+b $ najlepiej przybliżającą te punkty (w sensie LZNK).
+$ (x_i, y_i) $ - punkty
+$y(x_i)-y_i$ - co chcemy zminimalizować
+Policzmy normę: $ \min_{a, b} \sum_{i=1}^{4}(y(x_i)-y_i)^2$
+Niewiadome to $ a $ oraz $ b $, więc niech $ z=\begin{Bmatrix}
+a\\b
+\end{Bmatrix} $ oraz $ d=\begin{Bmatrix}y_i\end{Bmatrix}_{i=1, 2, 3, 4}$
+$$A=\begin{Bmatrix}
+	1&x_1\\
+	1&x_2\\
+	1&x_3\\
+	1&x_4\\	
+\end{Bmatrix}$$
+chcemy $\min{||Az-d||_2}$
+Uwaga: w ten sposób odległość między punktami a prostą liczymy w pionie, a nie najbliższą (to dobrze, tak działą LZNK).
+Uwaga 2: LZNK nie działa dla równania $ y=a+e^{bx} $, ale dla $ y=a+be^x $ już tak!
+\section{Normy}
+dodatniość, liniowość z modułem, nierówność trójkąta
+wektorowe p-te: 
+$$||x||_p = \sqrt[p]{\sum_{i=1}^{n}|x_i|^p}$$
+$$||x||_\infty = \max_i |x_i|$$
+Normy macierzowe 
+$A\in \mathbb{R}^{n\times n}$
+normy indukowane
+$||A||=\sup_{x\not=0}\frac{||Ax||}{||x||}=\sup_{||x||=1}||Ax||$
+p-te normy macierzowe
+$||A||_p=\sup_{||x||_p=1}||Ax||_p, p=1, 2, \ldots, \infty$
+wszystkie poza $1, 2, \infty$ zwykle się pomija
+\subsection{Własności norm indukowanych macierzy}
+\begin{enumerate}
+	\item $||Ax||\leq||A||||x||$ - z definicji mamy $ ||A||\geq\frac{||Ax||}{||x||} $
+	\item $ ||AB||\leq||A||||B||, A,B\in \mathbb{R}^{n\times n} $ - bo 
+	$$ ||ABx||\leq||A||||Bx||\leq||A||||B||||x|| $$ oraz 
+	$$ ||AB||=\sup_{x\not=0}\frac{||ABx||}{||x||}\leq||A||||B|| $$
+\end{enumerate}
+\paragraph{Fakt.} W przestrzenuiach skończonego wymiaru wszystkie normy spełniają równanie:
+$ \exists_{c_1, c_2>0}\forall_{x}c_1||x||_1\leq||x||2\leq c_2||x||_1 $, gdzie normy są dowolne (niekoniecznie 1-a i 2-a)
+
+\paragraph{Zależności między normami}
+$ x\in\mathbb{R}^n $
+$c_1||x||_1\leq||x||2\leq c_2||x||_1$
+Jak $c_1$ się ma do $c_2$?
+$ ||x||^2_1=(\sum_i|x_i|)^2 \ge ||x||_2^2$
+$ ||x||_1\le >||x||_2 $
+$ ||x||_1\ge ||x||_\infty $
+$ n||x||_\infty\ge ||x||_1 $
+$ ||x||_\infty\le ||x||_2 $
+$ \sqrt n||x||_\infty\ge ||x||_2 $
+$ ||x||_1\leq n||x||_\infty\leq n||x||_2 $
+zatem $?=n$
+\paragraph{Nierówności}
+$ \frac1n ||A||_2\le\frac1{\sqrt n}||A||_\infty\le||A||_2\le\sqrt{n} ||A||_1\le n||A||_2$
+\subsection{Wzory na normy macierzowe}
+$ ||A||_1=\max_j\sum_{i=1}^{n} |a_{ij}|$
+$ ||A||_\infty=\max_i\sum_{j=1}^{n} |a_{ij}|$
+Zatem $ ||A^T||_1=||A||_\infty $
+Norma druga (spektralna)
+$||A||_2=\max_{\lambda\in\delta(A^TA)}\sqrt{\lambda}$
+Jeśli Q ortogonalna: $||Q||_2=1$, co za tym idzie $ ||I||_2=1 $
+$ \lambda $- wartość własna oraz $ v $ - wektor własny spełnieją $ Av=\lambda v $
+Norma Frobeniusa (Euklidesowa)
+$ ||A||_F = \sqrt{\sum_{i,j}|a_{ij}|} $
+Nie jest normą indukowaną!
+Bo dla wszystkich norm indukowanych $ ||I||=\sup_{x\not=0}\frac{||Ix||}{||x||} $
+$ ||I||_F=\sqrt{n} $ - zatem nie pochodzi od drugiej normy wektorowej!
+\end{document}

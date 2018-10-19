@@ -25,3 +25,15 @@ Jak sprawdzic czy rozwiazanie ukladu Ax=b jest dobre? Policzyc norme ||b-Ax||_2
 Co jak mamy x* - 100% dobre rozwiazanie?
 mozna policzyc ||x-x*||_2 - blad
 
+albo blad względny, wtedy dzielimy przez ||x*||
+
+lu(A) - przyjmuje jako argument macierz
+[L,U,P] = lu(A)
+
+Macierz Hilberta
+H=[h_ij], h_ij=1/i+j+1
+H=hilb(n)
+
+Rozwiązać układ równań z macierzą Hilberta dla n = 5, 10, 20, 40
+Hx=b, b=Hx*, x*=ones(n)
+
