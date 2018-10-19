@@ -1,7 +1,7 @@
 zeros(n,m=n)
 ones(n,m=n)
 eye(n) -> identyczność
-transpose
+transpose(A) albo A'
 A\b -> rozwiąż Ax=b
 function ret = nazwa(args...) 
     ...
@@ -37,3 +37,40 @@ H=hilb(n)
 Rozwiązać układ równań z macierzą Hilberta dla n = 5, 10, 20, 40
 Hx=b, b=Hx*, x*=ones(n)
 
+chol(A) - rozkład choleskyego
+
+Macierz Wilkinsona
+
+- jedynki na diagonali oraz w ostatniej kolumnie, a pod diagonalą wszędzie -1.
+
+
+
+Rozkład QR, LZNK
+
+A = [1,5;2,6;3,7;4,8];
+b = ones(4);
+
+
+Układ równań normalnych 
+A^T A x = A^T b
+
+
+x = A\b
+
+zrobić to na macierzy Vandermonde'a
+
+vandermonde - kolejne kolumny to kolejne potęgi jakiegoś wektora x
+oct: vander(x)
+ale octave robi od prawej do lewej, więc trzeba zrobić fliplr(vander(x))
+
+no i chcemy zabrać trochę kolumn żeby była nadokreślona
+zatem:
+A = flipllr(vander(x)(:, 1:n)
+
+i to dla m=100, n = 2,5,20
+
+x = (A'*A)\(A'*b)
+mierzenie czasu:
+tic
+#...  tutaj jakieś instrukcje
+toc
