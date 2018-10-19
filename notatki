@@ -1,0 +1,27 @@
+zeros(n,m=n)
+ones(n,m=n)
+eye(n) -> identyczność
+transpose
+A\b -> rozwiąż Ax=b
+function ret = nazwa(args...) 
+    ...
+    ...
+    ret = 2137
+end
+while (...)
+    ...
+end
+do 
+    ...
+until(...)
+for k = M
+    k jest kolumną
+    po k nie poiterujesz XD
+end
+
+
+Jak sprawdzic czy rozwiazanie ukladu Ax=b jest dobre? Policzyc norme ||b-Ax||_2
+    r = b-Ax - wektor residualny (residuum)
+Co jak mamy x* - 100% dobre rozwiazanie?
+mozna policzyc ||x-x*||_2 - blad
+
