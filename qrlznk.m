@@ -7,5 +7,5 @@ disp("r =");
 disp(r(x));
 
 [Q,R] = qr(A);# liczy całą macierz Q zamiast używać Householdera !!!
-qrerror = norm(A - Q * R)
-qerror = norm(Q*transpose(Q) - eye(4))
+qr_error = norm(A - Q * R)
+q_orth_error = norm(Q*transpose(Q) - eye(4))

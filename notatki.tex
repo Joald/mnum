@@ -145,53 +145,71 @@ gdzie $ \alpha = \lambda_{max}(A)/\lambda_{min}(A) $.
 \section{Układy nadokreślone - kontynuacja}
 \subsection{Zadanie 1.}
 \paragraph{Macierz Hessenberga} - to macierz trójkątna górna, z tym że niezerowe elementy mogą być jeden element pod diagonalą.
-$$\begin{Bmatrix}
-	x&\ldots&x&x\\x&x&\ldots&x\\&x
-\end{Bmatrix}$$
-Jak najmniejszym kosztem znaleźć rozkład $ QR $ tej macierzy?
+$$\begin{bmatrix}
+	x&\ldots&&&&x\\
+	x&x&\ldots&&&x\\
+	&x&x&\ldots&&x\\
+	&&\ddots&&&x\\
+	&&&x&x&x\\
+	&&&&x&x\\
+\end{bmatrix}$$
+Jak najmniejszym kosztem znaleźć rozkład $ QR $ tej macierzy?\\
 Metodą Householdera? Nie ma jak wykorzystać zer na dole.
-Obrotami Givensa. 
 \subsubsection{Obroty Givensa - przypomnienie}
-$ G_{ij} $ - macierz Givensa
-$ b=G_{ij}a, b_j=0 $
-$ \cos\phi = \frac{a_i}{\sqrt{a_i^2+a_j^2}} $
-$ \sin\phi = \frac{a_j}{\sqrt{a_i^2+a_j^2}} $
+\begin{enumerate}
+	\item $ G_{ij} $ - macierz Givensa
+	\item $ b=G_{ij}a$
+	\item $ b_j=0 $
+	\item $ \cos\phi = \frac{a_i}{\sqrt{a_i^2+a_j^2}} $
+	\item $ \sin\phi = \frac{a_j}{\sqrt{a_i^2+a_j^2}} $
+\end{enumerate}
+
 \subsubsection{Zamiana macierzy Hessenberga w górnotrójkątną obrotami Givensa}
 $$ (G_{ij}a)_j = -\frac{a_ia_j}{\sqrt{a_i^2 + a_j^2}}+\frac{a_ia_j}{\sqrt{a_i^2 + a_j^2}}=0$$
-$$G_{n-1\ n}\ldots G_{i\ i+1}\ldots G_{12}A=R$$
+$$G_{n-1 n}\ldots G_{i i+1}\ldots G_{12}A=R$$
 \subsubsection{Koszt}
-Robimy $ n-1 $ iteracji.
-Dla $ G_{i\ i+1} $ trzeba wykonać jeden pierwiastek, $ w_i =cw_i+sw_{i+1}$ oraz $w_{i+1} = -sw_i + cw_{i+1}$, łącznie $4(n-1) $ mnożeń.
-Łącznie $4\sum_{i=1}^{n-1}n-i=4\sum_{i=1}^{n-1}i=\frac{4n(n-1)}{2}\sim2n^2$
+Robimy $ n-1 $ iteracji.\\
+Dla $ G_{i\ i+1} $ trzeba wykonać jeden pierwiastek, $ w_i =cw_i+sw_{i+1}$ oraz $w_{i+1} = -sw_i + cw_{i+1}$, łącznie $4(n-1) $ mnożeń.\\
+Wszystko razem: $4\sum_{i=1}^{n-1}n-i=4\sum_{i=1}^{n-1}i=\frac{4n(n-1)}{2}\sim2n^2$.
 \subsection{Zadanie 2.}
-Dane są punkty $(-1, -1), (0,2), (1, 0), (2, 1)$.
-Znajdź prostą $ y=ax+b $ najlepiej przybliżającą te punkty (w sensie LZNK).
-$ (x_i, y_i) $ - punkty
-$y(x_i)-y_i$ - co chcemy zminimalizować
-Policzmy normę: $ \min_{a, b} \sum_{i=1}^{4}(y(x_i)-y_i)^2$
-Niewiadome to $ a $ oraz $ b $, więc niech $ z=\begin{Bmatrix}
-a\\b
-\end{Bmatrix} $ oraz $ d=\begin{Bmatrix}y_i\end{Bmatrix}_{i=1, 2, 3, 4}$
-$$A=\begin{Bmatrix}
-	1&x_1\\
-	1&x_2\\
-	1&x_3\\
-	1&x_4\\	
-\end{Bmatrix}$$
-chcemy $\min{||Az-d||_2}$
-Uwaga: w ten sposób odległość między punktami a prostą liczymy w pionie, a nie najbliższą (to dobrze, tak działą LZNK).
-Uwaga 2: LZNK nie działa dla równania $ y=a+e^{bx} $, ale dla $ y=a+be^x $ już tak!
+Dane są punkty $(-1, -1), (0,2), (1, 0), (2, 1)$.\\
+Znajdź prostą $ y=ax+b $ najlepiej przybliżającą te punkty (w sensie LZNK).\\
+Zadane punkty oznaczamy jako $ (x_i, y_i) $.\\
+Zatem to, co chcemy zminimalizować to $y(x_i)-y_i$.\\
+Policzmy normę: $ \min_{a, b} \sum_{i=1}^{4}(y(x_i)-y_i)^2$\\
+Niewiadome to $ a $ oraz $ b $, więc niech: 
+$$ 
+\begin{matrix}
+	z=\begin{bmatrix}a\\b\end{bmatrix}&
+	d=\begin{bmatrix}y_i\end{bmatrix}_{i=1, 2, 3, 4}&
+	A=\begin{bmatrix}
+		1&x_1\\
+		1&x_2\\
+		1&x_3\\
+		1&x_4\\	
+	\end{bmatrix}
+\end{matrix}
+$$
+Teraz wystarczy użyć LZNK aby obliczyć $\min{||Az-d||_2}$:
+\paragraph{TODO:} policzyć to
+\paragraph{Uwaga:} w ten sposób odległość między punktami a prostą liczymy w pionie, a nie najbliższą (to dobrze, tak działą LZNK).
+\paragraph{Uwaga 2:} LZNK nie działa dla równania $ y=a+e^{bx} $, ale dla $ y=a+be^x $ już tak!
 \section{Normy}
-dodatniość, liniowość z modułem, nierówność trójkąta
-wektorowe p-te: 
+\paragraph{Przypomnienie definicji: } Norma $ ||\cdot||: V\rightarrow\mathbb{R}^+$ spełnia następujące warunki:
+\begin{enumerate}
+	\item $||u+v||\leq||u||+||v||$
+	\item $||\alpha v||=||av||$
+	\item $||v||=0\implies v=0$ - wektor zerowy
+\end{enumerate}
+\paragraph{$p$-te normy wektorowe:}
 $$||x||_p = \sqrt[p]{\sum_{i=1}^{n}|x_i|^p}$$
 $$||x||_\infty = \max_i |x_i|$$
-Normy macierzowe 
-$A\in \mathbb{R}^{n\times n}$
-normy indukowane
-$||A||=\sup_{x\not=0}\frac{||Ax||}{||x||}=\sup_{||x||=1}||Ax||$
-p-te normy macierzowe
-$||A||_p=\sup_{||x||_p=1}||Ax||_p, p=1, 2, \ldots, \infty$
+\paragraph{Normy macierzowe}
+Niech $A\in \mathbb{R}^{n\times n}$.\\
+Macierzowe normy indukowane są postaci
+$$||A||=\sup_{x\not=0}\frac{||Ax||}{||x||}=\sup_{||x||=1}||Ax||$$
+\subparagraph{$p$-te normy macierzowe}
+$$||A||_p=\sup_{||x||_p=1}||Ax||_p, p=1, 2, \ldots, \infty$$
 wszystkie poza $1, 2, \infty$ zwykle się pomija
 \subsection{Własności norm indukowanych macierzy}
 \begin{enumerate}
@@ -200,34 +218,34 @@ wszystkie poza $1, 2, \infty$ zwykle się pomija
 	$$ ||ABx||\leq||A||||Bx||\leq||A||||B||||x|| $$ oraz 
 	$$ ||AB||=\sup_{x\not=0}\frac{||ABx||}{||x||}\leq||A||||B|| $$
 \end{enumerate}
-\paragraph{Fakt.} W przestrzenuiach skończonego wymiaru wszystkie normy spełniają równanie:
-$ \exists_{c_1, c_2>0}\forall_{x}c_1||x||_1\leq||x||2\leq c_2||x||_1 $, gdzie normy są dowolne (niekoniecznie 1-a i 2-a)
+\paragraph{Fakt.} W przestrzeniach skończonego wymiaru wszystkie normy spełniają równanie:
+$ \exists_{c_1, c_2>0}\forall_{x}c_1||x||_1\leq||x||2\leq c_2||x||_1 $, gdzie normy są dowolne (niekoniecznie pierwsza i druga)
 
-\paragraph{Zależności między normami}
-$ x\in\mathbb{R}^n $
-$c_1||x||_1\leq||x||2\leq c_2||x||_1$
-Jak $c_1$ się ma do $c_2$?
-$ ||x||^2_1=(\sum_i|x_i|)^2 \ge ||x||_2^2$
-$ ||x||_1\le >||x||_2 $
-$ ||x||_1\ge ||x||_\infty $
-$ n||x||_\infty\ge ||x||_1 $
-$ ||x||_\infty\le ||x||_2 $
-$ \sqrt n||x||_\infty\ge ||x||_2 $
-$ ||x||_1\leq n||x||_\infty\leq n||x||_2 $
-zatem $?=n$
+\subsection{Zależności między normami}
+Niech $ x\in\mathbb{R}^n $, a normy będą $p$-te.
+
+$$ ||x||^2_1=(\sum_i|x_i|)^2 \ge ||x||_2^2$$
+$$ ||x||_1\le \alpha||x||_2 $$
+Jakie $\alpha$ wybrać?
+$$ ||x||_1\ge ||x||_\infty $$
+$$ n||x||_\infty\ge ||x||_1 $$
+$$ ||x||_\infty\le ||x||_2 $$
+$$ \sqrt n||x||_\infty\ge ||x||_2 $$
+$$ ||x||_1\leq n||x||_\infty\leq n||x||_2 $$
+Zatem $\alpha=n$.
 \paragraph{Nierówności}
 $ \frac1n ||A||_2\le\frac1{\sqrt n}||A||_\infty\le||A||_2\le\sqrt{n} ||A||_1\le n||A||_2$
 \subsection{Wzory na normy macierzowe}
-$ ||A||_1=\max_j\sum_{i=1}^{n} |a_{ij}|$
-$ ||A||_\infty=\max_i\sum_{j=1}^{n} |a_{ij}|$
-Zatem $ ||A^T||_1=||A||_\infty $
-Norma druga (spektralna)
-$||A||_2=\max_{\lambda\in\delta(A^TA)}\sqrt{\lambda}$
+$$ ||A||_1=\max_j\sum_{i=1}^{n} |a_{ij}|$$
+$$ ||A||_\infty=\max_i\sum_{j=1}^{n} |a_{ij}|$$
+Zatem $ ||A^T||_1=||A||_\infty $.\\
+\paragraph{Norma druga (spektralna)}
+$$||A||_2=\max_{\lambda\in\delta(A^TA)}\sqrt{\lambda}$$
+Gdzie $ \delta(M) $ jest zbiorem wartości własnych macierzy $ M $.\\
 Jeśli Q ortogonalna: $||Q||_2=1$, co za tym idzie $ ||I||_2=1 $
 $ \lambda $- wartość własna oraz $ v $ - wektor własny spełnieją $ Av=\lambda v $
-Norma Frobeniusa (Euklidesowa)
-$ ||A||_F = \sqrt{\sum_{i,j}|a_{ij}|} $
-Nie jest normą indukowaną!
-Bo dla wszystkich norm indukowanych $ ||I||=\sup_{x\not=0}\frac{||Ix||}{||x||} $
+\paragraph{Norma Frobeniusa (Euklidesowa)}
+$$ ||A||_F = \sqrt{\sum_{i,j}|a_{ij}|} $$
+Nie jest normą indukowaną, bo dla wszystkich norm indukowanych zachodzi $ ||I||=\sup_{x\not=0}\frac{||Ix||}{||x||}=1 $, a 
 $ ||I||_F=\sqrt{n} $ - zatem nie pochodzi od drugiej normy wektorowej!
 \end{document}
