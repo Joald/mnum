@@ -10,6 +10,7 @@
 \usepackage{mathtools}
 \usepackage{listings}
 \usepackage{amsthm}
+\usepackage{amsmath}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -53,13 +54,13 @@
 	\item Niech $ A=M-Z $, wtedy $ Ax=Mx-Zx=b $, zatem $ Mx=Zx+b $
 	\item TODO Metoda iteracji prostej Banacha $Mx_{n+1} = Zx_{n}+b$
 	\item Jeśli wybierzemy $ M $ tak, by układ z macierzą $ M $ można było tanio rozwiązać, wtedy iteracja też będzie tania
-	\item Chcemy, żeby $ M $ było dobrym przybliżeniem $ A $, ale nie aż tak łatwo że 
+	\item Chcemy, żeby $ M $ było dobrym przybliżeniem $ A $, ale nie aż tak łatwo że
 	\item Metoda Jacobiego $$a_{kk}x_{k}^{n+1}=b - \sum_{j\not=k} a_{kj}x_{j}^n$$
 	\item inny pomysł, metoda Gaussa-Seidela: $a_{kk}x_k^{(n+1)} = b_k - \sum_{j<k}a_{kj}x_{j}^{(n+1)} - \sum_{j >k}a_{kj}x_{j}^{(n)}$
-	\item Uwaga: fakt życiowy. Gdy $n$ jest bardzo duże, wówczas w $A$ jest zazwyczaj bardzo dużo zer, o ile układ pochodzi z $\text{REAL LIFE}^{TM}$. 
+	\item Uwaga: fakt życiowy. Gdy $n$ jest bardzo duże, wówczas w $A$ jest zazwyczaj bardzo dużo zer, o ile układ pochodzi z $\text{REAL LIFE}^{TM}$.
 	\item To oznacza, że ilość elementów różnych od $0$ jest rzędu $O(n)$. Mówimy wtedy że macierz jest rzadka.
 	\item Wniosek: Jeśli $ A $ ma $ O(n) $ niezerowych elementów, to mnożenie $Ax$ kosztuje też $ O(n) $. Ponadto, rozwiązanie układu z macierzą dolnotrójkątną też jest $ O(n) $
-	
+
 \end{itemize}
 \section{Normy macierzowe i wektorowe}
 \paragraph{Normy wektorowe}
@@ -91,7 +92,7 @@ Czyli $ x_{n+1}-x^*=B(x_k-x^*)=B^2(x_k-x^*)\ldots=B^{k+1}(x_0-x^*) $
 
 \paragraph{Wniosek:} Jeśli $ ||B||<1 $, to $(*)$ zbieżna do $x*$ dla dow. $x_0\in \mathbb{R}^N$
 
-\paragraph{Twierdzenie:} Metoda $ (*) $ jest zbieżna do $ x^* $ z dowolnego $ x_0 $ wtw gdy $ \rho(B)<1 $ 
+\paragraph{Twierdzenie:} Metoda $ (*) $ jest zbieżna do $ x^* $ z dowolnego $ x_0 $ wtw gdy $ \rho(B)<1 $
  gdzie $ \rho(B)=\max\{|\lambda|:\lambda \text{ jest wartością własną }B\} $ - promień spektralny macierzy $ B $
  Dowód pominięty
 
@@ -111,7 +112,7 @@ $ |a_n|>\sum_{j\not=i}|a_{ij}|\text{ dla }i=1..N $
 
 \section{Metody iteracyjne oparte na normalizacji w przestrzeni Kryłowa}
 \paragraph{$k$-ta przestrzeń Kryłowa}
-$$ K_k = {r_0, Ar_0, ...,A^{k-1}  r_0} $$ 
+$$ K_k = {r_0, Ar_0, ...,A^{k-1}  r_0} $$
 gdzie $ r_k:=b-Ax_k $ - reszta na $ k $-tej iteracji
 \paragraph{Metoda iteracyjna}
 \begin{itemize}
@@ -123,7 +124,7 @@ gdzie $ r_k:=b-Ax_k $ - reszta na $ k $-tej iteracji
 \end{itemize}
 
 \subsection{Metoda gradientów sprzężonych (CG - Conjugate Gradient) dla macierzy $A=A^T>0$}
-\subsubsection{Fakty o macierzach symetrycznych i dodatnio określonych}  
+\subsubsection{Fakty o macierzach symetrycznych i dodatnio określonych}
 
 Niech $A = A^T>0$ (symetryczna i dodatnio określona, a co za tym idzie $x^TAx>0\text{ dla }x\not=0$). Wtedy:
 \begin{enumerate}
@@ -138,7 +139,65 @@ Ale przecież potrzebujemy mieć rozwiązanie żeby to zrobić!
 \paragraph{Twierdzenie.} Po $ k $ iteracjach metody CG błąd $ ||x_k-x^*||_A \leq 2(\frac{\sqrt{\alpha}-1}{\sqrt{\alpha}+1})^k ||x_0-x^*||_A $
 gdzie $ \alpha = \lambda_{max}(A)/\lambda_{min}(A) $.
 
+\section{Zagadnienia własne}
 
+Dla $ A \in R^{NxN} $ znaleźć parę własną $ (\lambda, x)$, że $Ax = \lambda x$ oraz $x \neq 0$.
+$\lambda$ pierwiastkiem wielomianu charakterystycznego: $det(A - \lambda I) = 0$
+Gdy $A = A^T$ to wartości i wektory własne rzeczywiste, istnieje $Q$ ortogonalna $A = Q*L*Q^T$ (L to tylko lambdy na przekątnej)
+
+
+3 podstawowe klasy zadań obliczeniowych dla zagadnień własnych:
+
+1. ekstremalne wartości własne (największa, najmniejsza, etc) i odp. wektory (PageRank)
+
+2. wartości własne bliskie zadanej wartości (wieżowce w Japonii)
+
+3. pełne zadanie własne
+
+Wyznaczanie wektora odpowiadającego dominującej wartości własnej (zakładamy że istnieje dokładnie jedna wartość własna że jej moduł ostro większy od innych modułów)
+
+$$||A_x|| = ||\lambda*x|| = |\lambda| * ||x|| = |\lambda| $$ (bo $||x|| = 1$)
+
+Metoda potęgowa
+$x_0$ startowy o normie 1
+$$x_{n+1} = A * x_n$$
+$$x_{n+1} := x_{n+1}/||x_{n+1}|| $$
+skąd nazwa:
+$$x_{n+1} = A*x_n = A*Ax_{n-1} = A^2*x_{n-1} = ... = A^{n+1}*x_0 $$
+nie robić tego w ten sposób, bo A jest duże (ale rzadkie) i będzie coraz mniej rzadkie!
+Lepiej iteracyjnie, bo tanio mnożyć przez rzadką macierz
+
+Twierdzenie o zbieżności tej metody:
+Załóżmy, że A diagonalizowalna - istnieje Y nieosobliwe że
+$YAY^{-1}$ tworzy macierz diagonalną
+
+$A*y_i = \lambda*y_i$ gdzie $y_i$ to kolumna $Y$
+
+$$ x_0 = \sum_{1}^{n} \alpha_i * y_i $$
+$$x_n = A^n*x_0 = A^{n-1}*(A*x_0) = $$
+$$ = A^{n-1}*\sum_{1}^{n} \alpha_i*y_i = $$
+$$ = A^{n-1}*\sum_{1}^{n} \alpha_i*\lambda_i*y_i = $$
+$$= \sum_{1}^{n} \alpha_i*\lambda_i^n*y_i = $$
+$$= \lambda_1^n *\sum_{1}^{n} \alpha_i*()\lambda_i/\lambda_1)^n*y_i$$
+
+Jeżeli $\lambda_1$ dominujące, to $\lambda_i/\lambda_1^n \rightarrow 0 $
+($\lambda_1 \neq 0 $)
+
+Odzyskanie wartości własnej na podstawie przybliżenia (znaleźć takie przybliżenie lambdy że norma przybliżenia $A*x-\lambda*x$  minimalna) - jest to zadanie najmniejszych kwadratów
+iloraz Rayleigh TODO
+Transformacje spektrum:
+1. Jeżeli $\lambda$ ww $A$ to $\lambda-\mu$ ww $A-\mu*I$
+2. Jeżeli $\lambda$ ww $A$ nieosobliwego to $1/(\lambda)$ ww $A^(-1)$
+
+Odwrotna metoda potęgowa na zadania typu 2:
+
+Wartosci wlasne $(A - \mu*I)^{-1}$ to $1/(\lambda-\mu) $
+Kiedy największe? Kiedy $\mu$ blisko $\lambda_i$ to wtedy $1/(\lambda_i - \mu$ dominującą ww
+
+RQI raileigh quotient iteration, bardzo szybko zbieżne ale niekoniecznie do najbliższego oryginałowi ww TODO
+
+3. pełny problem - metoda QR TODO
+%tak naprawdę metoda potęgowa nie na jednym wektorze a na wszystkich, zazwyczaj słabo działa, modyfikacja "raz dodajemy a raz odejmujemy"
 
 
 \part{Ćwiczenia}
@@ -177,8 +236,8 @@ Znajdź prostą $ y=ax+b $ najlepiej przybliżającą te punkty (w sensie LZNK).
 Zadane punkty oznaczamy jako $ (x_i, y_i) $.\\
 Zatem to, co chcemy zminimalizować to $y(x_i)-y_i$.\\
 Policzmy normę: $ \min_{a, b} \sum_{i=1}^{4}(y(x_i)-y_i)^2$\\
-Niewiadome to $ a $ oraz $ b $, więc niech: 
-$$ 
+Niewiadome to $ a $ oraz $ b $, więc niech:
+$$
 \begin{matrix}
 	z=\begin{bmatrix}a\\b\end{bmatrix}&
 	d=\begin{bmatrix}y_i\end{bmatrix}_{i=1, 2, 3, 4}&
@@ -186,7 +245,7 @@ $$
 		1&x_1\\
 		1&x_2\\
 		1&x_3\\
-		1&x_4\\	
+		1&x_4\\
 	\end{bmatrix}
 \end{matrix}
 $$
@@ -214,8 +273,8 @@ wszystkie poza $1, 2, \infty$ zwykle się pomija
 \subsection{Własności norm indukowanych macierzy}
 \begin{enumerate}
 	\item $||Ax||\leq||A||||x||$ - z definicji mamy $ ||A||\geq\frac{||Ax||}{||x||} $
-	\item $ ||AB||\leq||A||||B||, A,B\in \mathbb{R}^{n\times n} $ - bo 
-	$$ ||ABx||\leq||A||||Bx||\leq||A||||B||||x|| $$ oraz 
+	\item $ ||AB||\leq||A||||B||, A,B\in \mathbb{R}^{n\times n} $ - bo
+	$$ ||ABx||\leq||A||||Bx||\leq||A||||B||||x|| $$ oraz
 	$$ ||AB||=\sup_{x\not=0}\frac{||ABx||}{||x||}\leq||A||||B|| $$
 \end{enumerate}
 \paragraph{Fakt.} W przestrzeniach skończonego wymiaru wszystkie normy spełniają równanie:
@@ -246,6 +305,6 @@ Jeśli Q ortogonalna: $||Q||_2=1$, co za tym idzie $ ||I||_2=1 $
 $ \lambda $- wartość własna oraz $ v $ - wektor własny spełnieją $ Av=\lambda v $
 \paragraph{Norma Frobeniusa (Euklidesowa)}
 $$ ||A||_F = \sqrt{\sum_{i,j}|a_{ij}|} $$
-Nie jest normą indukowaną, bo dla wszystkich norm indukowanych zachodzi $ ||I||=\sup_{x\not=0}\frac{||Ix||}{||x||}=1 $, a 
+Nie jest normą indukowaną, bo dla wszystkich norm indukowanych zachodzi $ ||I||=\sup_{x\not=0}\frac{||Ix||}{||x||}=1 $, a
 $ ||I||_F=\sqrt{n} $ - zatem nie pochodzi od drugiej normy wektorowej!
 \end{document}
