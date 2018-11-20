@@ -307,4 +307,235 @@ $ \lambda $- wartość własna oraz $ v $ - wektor własny spełnieją $ Av=\lam
 $$ ||A||_F = \sqrt{\sum_{i,j}|a_{ij}|} $$
 Nie jest normą indukowaną, bo dla wszystkich norm indukowanych zachodzi $ ||I||=\sup_{x\not=0}\frac{||Ix||}{||x||}=1 $, a
 $ ||I||_F=\sqrt{n} $ - zatem nie pochodzi od drugiej normy wektorowej!
+
+\section{Ćwiczenia 26/10}
+\subsection{Dalsze własności norm}
+$$ ||A||_2=\max_{\lambda\in\delta(A^TA)}\sqrt{\lambda} $$
+Jeśli $ A=A^T $ to $ ||A||_2=\max_{\lambda\in\delta(A)}|\lambda| $. 
+\paragraph{Twierdzenie.} Jeśli $ \lambda $ jest wartością własną $ A $, to $ \lambda^2 $ jest wartością własną $ A^2 $.\begin{proof}
+	$Av=\lambda v \implies A^2v=\lambda Av=\lambda^2v$
+\end{proof}
+$$ ||A||_2=\sup_{||x||=1}||Ax||_2 $$
+$$||Ax||_2=\sqrt{(Ax)^TAx}=\sqrt{x^TA^TAx}=(*)$$
+$ A^TA $ jest macierzą symetryczną, oraz $ A^TA=Q^T\Lambda Q $, gdzie $ \Lambda $ jest macierzą diagonalną $ \Lambda=\text{diag}(\lambda_1, \lambda_2, \ldots, \lambda_n) $ oraz $ Q $ jest macierzą ortogonalną wektorów własnych.
+
+\paragraph{UZUPEŁNIĆ TODO}
+\section{Ćwiczenia 9/11}
+\subsection{Metoda Richardsona - kontynuacja zadania}
+Metoda Richardsona - $ x_{k+1}=x_k+\tau(b-Ax_k) $
+Szukaliśmy parametru $ \tau $ t. że metoda Richardsona jest zbieżna.
+$ A $ ma wartości własne $ \lambda_1, \ldots, \lambda_n>0 $.
+Jest zbieżna dla $ \tau\in(0, \frac2{\lambda_{max}}) $. Dla jakich $ \tau $ jest zbieżna najszybciej?
+$$\rho(I-\tau A)=\max\{|1-\tau\lambda_{min}|, |1-\tau\lambda_{max}|\}$$
+Powiedzieliśmy, że
+$$ ||x_{k+1}=x^*||\le||I-Q^{-1}A||||x_k-x^*|| $$
+Zatem szukamy $ \tau $ realizującego: 
+$$ {\arg\min}_{\tau\in(0, \frac2{\lambda_{max}})}\rho(I-\tau A)$$
+Czyli: 
+$$ {\arg\min}_{\tau\in(0, \frac2{\lambda_{max}})} \max\{|1-\tau\lambda_{min}|, |1-\tau\lambda_{max}|\} $$
+
+Pierwsz funkcja ma miejsce zerowe w $ \frac1{\lambda_{min}} $, a druga w $ \frac1{\lambda_{max}} $. Można narysować obie funkcje, one przecinają się w zwykle dwóch punktach, czyli $ |1-\tau\lambda_{min}| = |1-\tau\lambda_{max}| $. Zatem albo $ \tau = 0 $, co daje nam rozbieżność, albo $ \tau=\frac2{\lambda_{max}+\lambda_{min}} $ Żeby wystartować z metodą, to wystarczyłoby ograniczenie górne na $ \lambda_{max} $
+\subsection{Metoda Gaussa-Seidela}
+$$A=\begin{bmatrix}
+	2&-1&&&&\\
+	-1&2&-1&&&&\\
+	&-1&2&-1&&&\\
+	&&\ddots&\ddots&\ddots&&\\
+	&&&\ddots&\ddots&\ddots&\\
+	&&&&-1&2&-1\\
+	&&&&&-1&2
+\end{bmatrix}$$
+Wykaż, że metoda Gaussa-Seidela jest zbieżna dla macierzy A.
+\paragraph{Fakt.} Metoda Gaussa-Seidela jest zbieżna dla macierzy diagonalnie dominującej $ (\forall_{i}|a_{ii}|>\sum_{j\not=i}|a_{ij}|) $.
+Metoda iteracyjna jest zbieżna, jeśli promień spektralny macierzy jest mniejszy od 1.
+\paragraph{Promień spektralny} 
+\begin{itemize}
+	\item$$ \rho(I-Q^{-1}A) $$
+	\item kres dolny po wszystkich normach indukowanych:
+	$$\inf_{||\cdot||\text{jest indukowana}}||I-Q^{-1}A ||$$
+\end{itemize}
+
+Wystarczy pokazać, że dla pewnej normy indukowanej $ ||\cdot|| $(jakiej?) zachodzi: $$ ||I-Q^{-1}A ||<1$$
+\begin{proof}
+Tutaj, $$
+Q=\begin{bmatrix}
+2&&&&&\\
+-1&2&&&&&\\
+&-1&2&&&&\\
+&&\ddots&\ddots&&&\\
+&&&\ddots&\ddots&&\\
+&&&&-1&2&\\
+&&&&&-1&2
+\end{bmatrix}
+$$
+Korzystamy z tego, że $ Q^{-1}Q=I $, i prostym spostrzeżeniem jest:
+$$
+Q=\begin{bmatrix}
+2^{-1}&&&&&\\
+2^{-2}&2^{-1}&&&&&\\
+\vdots&&2^{-1}&&&&\\
+\vdots&&\ddots&\ddots&&&\\
+\vdots&&&\ddots&\ddots&&\\
+\vdots&&&&&2^{-1}&\\
+2^{-n}&&&&&2^{-2}&2^{-1}
+\end{bmatrix}
+$$
+
+Teraz 
+$$
+Q^{-1}A=\begin{bmatrix}
+1&-\frac12&&&&\\
+0&\frac34&-\frac12&&&&\\
+&-2^{-3}&\frac34&-\frac12&&&\\
+&\vdots&\ddots&\ddots&\ddots&&\\
+&&&\ddots&\ddots&\ddots&\\
+&&&&\ddots&\frac34&-\frac12\\
+0&-2^{-n}&\ldots&\ldots&&-2^{-3}&\frac34
+\end{bmatrix}
+$$
+$$
+G=I-Q^{-1}A=\begin{bmatrix}
+1&\frac12&&&&\\
+0&\frac14&\frac12&&&&\\
+&2^{-3}&\frac14&\frac12&&&\\
+&\vdots&\ddots&\ddots&\ddots&&\\
+&&&\ddots&\ddots&\ddots&\\
+&&&&\ddots&\frac14&\frac12\\
+0&2^{-n}&\ldots&\ldots&&2^{-3}&\frac14
+\end{bmatrix}
+$$
+$ ||G||_1=\sum_{i=1}^n(\frac12)^i=1-\frac1{2^n}<1 $
+\end{proof}
+\subsection{Błędy numerycznych rozwiązań układów równań}
+Rozwiązujemy układ $ Ax^*=b $, $ x^* $ jest dokładnym rozwiązaniem, $ x $ - wynik obliczeń numerycznych. Wtedy $ x^*=x+A^{-1}(b-Ax)=x+A^{-1}r=x+e $, gdzie $ r $ jest wektorem residualnym ($ r=b-Ax $), a $ e $ - błędem. Rozwiązując układ równań $ Ae=r $ otrzymamy poprawkę rozwiązania. Tylko czy to ma sens? Układy z macierzą $ A $ już umiemy łatwo rozwiązywać, tylko to wciąż nie będzie idealne, bo znów mamy przybliżenie.
+\paragraph{Iteracyjne poprawianie rozwiązań}
+$$\begin{matrix}
+ x^{0}&=&x \\
+ x^{(k+1)}&=&x^{(k)}+A^{-1}r^{(k)}, &k=0,1,\ldots 
+\end{matrix}$$
+
+
+Żeby poprawianie poprawiało, obliczanie wektora residualnego musi być wykonane w jak największej precyzji.
+\subsection{Wartości i wektory własne}
+$ \lambda, v $ - para własna dla $A$, spełnia $ Av=\lambda v $
+$$||Av||=||\lambda v||$$
+$$||Av||=|\lambda|||v||$$
+$$\frac{||Av||}{||v||}=|\lambda|$$
+Czyli dla dowolnej wartości własnej i dowolnej normy indukowanej zachodzi:
+$$\sup_{v\not=0}\frac{||Av||}{||v||}\ge|\lambda|\implies |\lambda|\le||A||$$
+To się przydaje w metodzie Richardsona.
+
+\paragraph{Twierdzenie Gerszgorina} - o lokalizacji wartości własnych. Każda wartość własna macierzy $ A $ leży co najmniej w jednym z kół na płaszczyźnie zespolonej:
+$$ D_i=\{z\in\mathbb{C}:|z-a_{ii}|\le \sum_{j=1, j\not=i}^{n}|a_{ij}|\} \text{ dla }  i=1,2,\ldots, n $$
+\begin{proof}
+	Weźmy dowolną wartość własną $ \lambda $ z wektorem $ v $. Pokażemy, że istnieje wiersz $ i $ macierzy $ A $ t. że $ \lambda\in D_i $. Niech $ ||v||_\infty=1 $ co implikuje że $ |v_i|=1 $. Teraz $ (Av)_i=\lambda v_i=\sum_{j=1}^n a_{ij}v_j $\\
+	
+	$$(\lambda-a_{ii}) v_i=\sum_{j=1, j\not=i}^n a_{ij}v_j$$
+	$$|(\lambda-a_{ii}) v_i|=|\sum_{j=1, j\not=i}^n a_{ij}v_j|$$
+	$$|(\lambda-a_{ii}) v_i|\le\sum_{j=1, j\not=i}^n|a_{ij}||v_j|\le\sum_{j\not=i}|a_{ij}|$$
+\end{proof}
+\paragraph{Wniosek.} Macierz diagonalnie dominująca nie ma zerowych wartości własnych, czyli jest nieosobliwa.
+
+\section{Ćwiczenia 16/11}
+\subsection{Wyznaczanie wektorów i wartości własnych - c.d.}
+\paragraph{Metody wyznaczania} - dla $ Av_i=\lambda_iv_i $
+
+\begin{itemize}
+	\item Metoda potęgowa - Zaczynamy od wektora $x_0$ i mnożymy z lewej przez $ A $. Zakładamy $|\lambda_1|>|\lambda_2|\ge\ldots\ge|\lambda_n| $ oraz $ A $ ma $ n $ wektorów własnych. Robimy: $$ x_0, \|x_0\|_2=1 $$ 
+	$$y_{k+1}=Ax_k, x_{k+1}=\frac{y_{k+1}}{\|y_{k+1}\|_2}$$
+	Na koniec wartość własną dostajemy: 
+	$$\sigma_k=\frac{x_k^TAx_k}{x_k^tx_k}=x^T_ky_{k+1} $$
+	\item Odwrotna metoda potęgowa. 
+	$$ x_0, \|x_0\|_2=1 $$ 
+	$$(A-\mu I)y_{k+1}=x_k$$
+	$$x_{k+1}=\frac{y_{k+1}}{\|y_{k+1}\|_2}$$
+	$$\sigma_k=x^T_ky_{k+1} $$
+	Jeśli $ \mu=0 $ to $ |\lambda_n| $ musi być ostro mniejsze, bo w normalnej $ |\lambda_0| $ musiało być ostro większe, a $ v_i=\lambda_iA^{-1}v_i\implies A^{-1}v_i=\frac1{\lambda_i}v_i$
+	Wartości własne $ (A-\mu I)^{-1} $ to $ \frac{1}{\lambda_i-\mu} $
+	\item Co jeśli $|\lambda_1|=|\lambda_2|>|\lambda_3|\ge \dots$? Dostaniemy wektor będący kombinacją liniową wektorów własnych odpowiadających $ \lambda_1 $ i $ \lambda_2 $.
+	\item Mamy $|\lambda_1|>|\lambda_2|>|\lambda_3|\ge\ldots\ge|\lambda_n| $. Wyznaczyliśmy $ \lambda_1 $ z metody potęgowej. Jak wyznaczyć $|\lambda_2|$?
+	Przyjmujemy $ x_0=\sum_{i=2}^{n}\alpha_iv_i $ jeśli $\{v_i\}  $ baza ortogonalna: wybieramy $ x_0\bot v_1 $. Wtedy co kilka  kroków trzeba $ x_k $ ortogonalizować, żeby zachować ortogonalność utraconą ze względu na błędy zmiennoprzecinkowe.
+\end{itemize}
+Dane są:
+$$A=\begin{bmatrix}
+2&1\\
+1&2\\
+\end{bmatrix}, x_0=\begin{bmatrix}
+2\\
+1\\
+\end{bmatrix}$$ Czy metoda potęgowa dla A jest zbieżna dla $ x_0 $? Policzmy ręcznie i zobaczmy XDD\\
+Wartości własne: rozwiążmy $ \det(A-\lambda I) =0$
+$$\det(A-\lambda I) = (2-\lambda)(2-\lambda)-1=0$$
+$$\lambda_1=3, \lambda_2=1$$
+Czyli wektory własne:
+$$v_1=\begin{bmatrix}
+1\\
+1\\
+\end{bmatrix}, v_2=\begin{bmatrix}
+2\\
+1\\
+\end{bmatrix}$$
+$$v_1=\begin{bmatrix}
+1\\
+-1+\varepsilon\\
+\end{bmatrix}$$
+$$Ax_0=\begin{bmatrix}
+1+\varepsilon\\
+-1+2\varepsilon\\
+\end{bmatrix}$$ Z epsilona zrobiły się dwa epsilony, w następnym 4 i 5, pottem 13 i 14. Iloraz współczynników przy epsilonach zbiega do jedynki, więc wynikowy wektor będzie w dobrym kierunku, ale możemy zbiec do wektora do którego mieliśmy dalej.
+\subsection{Metoda QR}
+$$A_0=A$$
+$$A_k=Q_kR_k - \text{rozkład QR}$$
+$$A_{k+1}=R_kQ_k - \text{mnożymy na odwrót}$$
+Wyznaczanie rozkładów jest kosztowne, ale da się łatwiej używając macierz Hessenberga która jest podobna do macierzy $ A $ (czyli ma te same wartości własne), a metoda QR zachowuje hessenbergowość.
+\begin{proof}
+	Mamy pokazać, że jeśli macierz Hessenberga $ A =QR$  to macierz $ RQ $ też jest Hessenberga.
+	\begin{enumerate}
+		\item Jeśli A - Hessenberga to Q też:
+		$$\begin{bmatrix}
+		x&\ldots&&&&x\\
+		x&x&\ldots&&&x\\
+		&x&x&\ldots&&x\\
+		&&\ddots&&&x\\
+		&&&x&x&x\\
+		&&&&x&x\\
+		\end{bmatrix}=\begin{bmatrix}
+			&&&&&\\ \\ \\ \\ \\ \\
+		\end{bmatrix}\begin{bmatrix}
+		x&\ldots&&&&x\\
+		&x&\ldots&&&x\\
+		&&x&\ldots&&x\\
+		&&&\ddots&&x\\
+		&&&&x&x\\
+		&&&&&x\\
+		\end{bmatrix}$$
+		Każda kolejna kolumna Q to kolumna A odpowiednio przemnożona.
+		\item Iloczyn $ RQ $ tj, trójkątna górna razy Hessenberga daje macierz Hessenberga. Rozpisać tak samo.
+	
+	\end{enumerate}
+\end{proof} 
+\paragraph{Jak sprowadzić macierz do postaci Hessenberga przy pomocy podobieństw?}
+Używamy Householdera. Dlaczego by nie do trójkątnej? Pomnożymy z lewej strony i dostaniemy zera w pierwszej kolumnie, ale potem pomnożymy z prawej żeby było podobieństwo i rozwali nam to pierwszą kolumnę. Jeśli zrobimy tak, żeby nie tykać pierwszego wiersza, to z prawej ten sam householder nie zmieni nam pierwszej kolumny. 
+Dowód poprawności:
+$$A_k=\begin{bmatrix}
+	B&F^T\\
+	D&E
+\end{bmatrix}$$
+Gdzie $ B $ jest Hessenberga $ k\times k$, a D ma zera we wszystkich kolumnach poza ostatnią, w której jest wektor $ d $.
+Dobieramy $ \tilde{H_k} $ tak aby $ \tilde{H_k}d=\alpha \tilde{e_1} $
+Wtedy $ H_k=\begin{bmatrix}
+I&0\\
+0&\tilde{H_k}
+\end{bmatrix} $
+Teraz $$
+A_{k+1}=H_kA_kH_k=A_k=\begin{bmatrix}
+B&F^T\\
+\tilde{H_k}D&\tilde{H_k}E
+\end{bmatrix}H_k=\begin{bmatrix}
+B&F^T\tilde{H_k}\\
+\tilde{H_k}D\tilde{H_k}&\tilde{H_k}E\tilde{H_k}
+\end{bmatrix}
+$$
+W ten sposób otrzymujemy $ H_{n-2}\dots H_1AH_i\dots H_{n-2}=T $, $ T $ jest postaci Hessenberga i jest podobna do $ A $.
+
 \end{document}
