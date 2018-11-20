@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.16)  20 OCT 2018 16:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.24)  25 OCT 2018 22:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **notatki.tex
 (./notatki.tex
 LaTeX2e <2017-04-15>
-Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+Babel <3.18> and hyphenation patterns for 4 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
@@ -716,26 +716,26 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 ) (./notatki.aux)
 \openout1 = `notatki.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 38.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 38.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 39.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 39.
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    ... okay on input line 39.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -768,95 +768,94 @@ Package graphics Info: Driver file: pdftex.def on input line 99.
 \Gin@req@width=\dimen129
 )
 \c@lstlisting=\count118
-LaTeX Font Info:    Try loading font information for OML+plm on input line 39.
+LaTeX Font Info:    Try loading font information for OML+plm on input line 40.
 
 (/usr/share/texlive/texmf-dist/tex/latex/polski/omlplm.fd
 File: omlplm.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
-LaTeX Font Info:    Try loading font information for OMS+plsy on input line 39.
+LaTeX Font Info:    Try loading font information for OMS+plsy on input line 40.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/polski/omsplsy.fd
 File: omsplsy.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
-LaTeX Font Info:    Try loading font information for OMX+plex on input line 39.
+LaTeX Font Info:    Try loading font information for OMX+plex on input line 40.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/polski/omxplex.fd
 File: omxplex.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <12> on input line 39.
+(Font)              <12> on input line 40.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <8> on input line 39.
+(Font)              <8> on input line 40.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <6> on input line 39.
-LaTeX Font Info:    Try loading font information for U+msa on input line 39.
+(Font)              <6> on input line 40.
+LaTeX Font Info:    Try loading font information for U+msa on input line 40.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 39.
+LaTeX Font Info:    Try loading font information for U+msb on input line 40.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <10> on input line 44.
+(Font)              <10> on input line 45.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <7> on input line 44.
+(Font)              <7> on input line 45.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <5> on input line 44.
+(Font)              <5> on input line 45.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <14.4> on input line 77.
+(Font)              <14.4> on input line 78.
  [2] [3]
-Overfull \hbox (2.15685pt too wide) in paragraph at lines 125--125
+Overfull \hbox (2.15685pt too wide) in paragraph at lines 126--126
 []\OT4/cmr/bx/n/12 Metoda gra-dien-tów sprz¦-»o-nych (CG - Con-ju-ga-te Gra-
  []
 
-[4] [5] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 240--242
+[4] [5] [6] [7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 299--301
 
  []
 
-[7] [8] (./notatki.aux) ) 
+[9] (./notatki.aux) ) 
 Here is how much of TeX's memory you used:
- 5211 strings out of 492982
- 70692 string characters out of 6134895
- 156277 words of memory out of 5000000
- 8692 multiletter control sequences out of 15000+600000
+ 5211 strings out of 494888
+ 70692 string characters out of 6179865
+ 151399 words of memory out of 5000000
+ 8445 multiletter control sequences out of 15000+600000
  18207 words of font info for 57 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 32i,12n,49p,232b,248s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plmi
-.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plit.enc}{/usr/share/tex
-live/texmf-dist/fonts/enc/dvips/pl/plsc.enc}{/usr/share/texlive/texmf-dist/font
-s/enc/dvips/pl/plme.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plrm.
-enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plms.enc}{/usr/share/texm
-f/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/pl/plbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/pl/
-plbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/pl/plex10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/pl/plmi10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/pl/plmi12.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/pl/plmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-pl/plmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/pl/plmi8.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/pl/plr10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/pl/plr12.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/pl/plr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/p
-l/plr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/pl/plr7.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/pl/plsy10.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/pl/plsy7.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/pl/plti10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm10
-00.pfb>
-Output written on notatki.pdf (8 pages, 136451 bytes).
+ 34 hyphenation exceptions out of 8191
+ 32i,12n,49p,232b,251s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plmi.enc
+}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plit.enc}{/usr/share/texlive
+/texmf-dist/fonts/enc/dvips/pl/plsc.enc}{/usr/share/texlive/texmf-dist/fonts/en
+c/dvips/pl/plme.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plrm.enc}
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plms.enc} </home/kamila/.texl
+ive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/pl/plbx10.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/pl/plbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/p
+l/plex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/pl/plmi10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/pl/plmi12.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/pl/plmi5.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/pl/plmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/pl/plmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/pl/plr10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/pl/plr12.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/pl/plr17.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/pl/plr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/p
+l/plr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/pl/plsy10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/pl/plsy7.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/pl/plti10.pfb>
+Output written on notatki.pdf (9 pages, 136287 bytes).
 PDF statistics:
- 114 PDF objects out of 1000 (max. 8388607)
- 84 compressed objects within 1 object stream
+ 117 PDF objects out of 1000 (max. 8388607)
+ 86 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

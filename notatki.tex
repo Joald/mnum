@@ -84,11 +84,11 @@ $$x_{k+1}=M^{-1}(b-Zx_k)$$
 $$x_{k+1}-x^*=M^{-1}(b-Zx_k)-x^*$$
 $$=M^{-1}(Ax^*-Zx_k)-x^*$$
 $$=M^{-1}(Ax^*-(M-A)x_k)-x^*$$
-$$=M^{-1}Ax^*+(I-M^{-1}A)x_k)-x^*$$
-$$=-(I-M^{-1}A)x^*+(I-M^{-1}A)x_k)-x^*$$
-$$=(I-M^{-1}A)(x^k-xu^*)$$
-Czyli $B$ pomnożont błąd $k$-ty.\\
-Czyli $ x_{n+1}-x^*=B(x_k-x^*)=B^2(x_k-x^*)\ldots=B^{k+1}(x_0-x^*) $
+$$=M^{-1}Ax^*+(I-M^{-1}A)x_k-x^*$$
+$$=-(I-M^{-1}A)x^*+(I-M^{-1}A)x_k$$
+$$=(I-M^{-1}A)(x_k-x^*)$$
+Czyli $B$ pomnożony błąd $k$-ty.\\
+Czyli $ x_{n+1}-x^*=B(x_k-x^*)=B^2(x_{k-1}-x^*)\ldots=B^{k+1}(x_0-x^*) $
 
 \paragraph{Wniosek:} Jeśli $ ||B||<1 $, to $(*)$ zbieżna do $x*$ dla dow. $x_0\in \mathbb{R}^N$
 
