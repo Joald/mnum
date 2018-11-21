@@ -12,8 +12,8 @@ poprawione, albo dodać pull requesta, albo zignorować, ale za każdym razem ki
 ktoś ignoruje błąd gdzieś na świecie umiera mały kotek :(
 
 ### Kontrybutorzy:
-Jacek Olczyk (Joald)
-Kamila Śledź (ksledz)
+- Jacek Olczyk (Joald) 
+- Kamila Śledź (ksledz)
 
 ### Czym to się różni od [zeszłorocznego skryptu](https://github.com/0mp/MetodyNumeryczneMIMUW2017)?
 A tym, że w tym roku idziemy w innej kolejności, że staram się uchwycić to co było powiedziane na wykładzie 
