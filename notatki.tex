@@ -537,5 +537,69 @@ B&F^T\tilde{H_k}\\
 \end{bmatrix}
 $$
 W ten sposób otrzymujemy $ H_{n-2}\dots H_1AH_i\dots H_{n-2}=T $, $ T $ jest postaci Hessenberga i jest podobna do $ A $.
+\section{Ćwiczenia n+2}
+\subsection{Arytmetyka $ fl $}
+W arytmetyce $ fl $ nie ma łączności w działaniach, np. 
+$ 1+\gamma+\gamma, \gamma=\frac32 10^{-16} $
+Precyzja arytmetyki to około $ 2.2\cdot 10^{-16} $. Policzmy: 
+$$ fl(1+\gamma+\gamma)=fl((1+\gamma)+\gamma) = fl(fl(1+\gamma)+\gamma)$$
+$$fl(1+\gamma)=1$$, bo najmniejsza reprezentowalna liczba większa od 1 to $ 1+\varepsilon $. Zatem wynikiem jest 1. Ale co jeśli inaczej znawiasujemy? Mnożenie przez 2 jest dokładne.
+$$ fl(1+\gamma+\gamma)=fl(1+(\gamma+\gamma)) = fl(1+fl(\gamma+\gamma)) =fl(1+2\gamma) \not=1\text{, bo } 2\gamma>\varepsilon$$
 
+\subsection{Utrata cyfr znaczących przy odejmowaniu}
+$$x=0.3721478693,\ y=0.3720230572,\ x-y=?$$
+Mamy system który obsługuje tylko 5 cyfr znaczących.
+$$rd(x)=0.37215,\ rd(y)=0.37202$$
+W naszym systemie uzyskamy wynik $ fl(x-y)=0.00013 $, podczas gdy w idealnej arytm. $ x-y=0.0001248121 $. Błąd bezwględny nie jest duży, ale względny: $ \frac{fl(x-y)-(x-y)}{x-y}\simeq 4\cdot10^{-2}$. Arytmetyka ma dokładność rzędu $ 10^{-5} $, a nasz błąd jest rzędu aż $ 10^{-2} $! Jest to związane z tym, że liczby które od siebie odejmujemy są bliskie sobie.
+\paragraph{Jak policzyć $ a^2-b^2 $?} 
+Wersja 1:
+\begin{lstlisting}[escapeinside={(*}{*)}]
+s := a * a;
+t := b * b;
+w := s - t;
+\end{lstlisting}
+Wersja 2: 
+\begin{lstlisting}[escapeinside={(*}{*)}]
+u := a + b;
+v := a - b;
+w := u * v;
+\end{lstlisting}
+
+Mamy zagwarantowane, że wszystkie działania spełniają 
+$$ fl(x\cdot y)=(x\cdot y)(1+\nu), |\nu|\le \varepsilon, \cdot\in\{+,-,*,/\} $$
+Ale to zakłada, że liczby są dokładnie reprezentowane!
+Jakie są błędy naszych "algorytmów"?
+
+\begin{enumerate}
+	\item$fl(a^2-b^2) = [a^2(1+\delta_1)-b^2(1+\delta_2)](1+\delta_3) = a^2(1+\nu_1)-b^2(1+\nu_2), $ gdzie $ \nu_1=\delta_1+\delta_3+\delta_1\delta_3, \nu_2=\delta_2+\delta_3+\delta_2\delta_3 $.
+	$ \frac{fl(a^2-b^2)-(a^2-b^2)}{a^2-b^2} = \frac{a^2\nu_1-b^2\nu_2}{a^2-b^2} $
+	Błąd względny zależy od danych! Jeśłi $ a^2, b^2 $ są bliskie i duże i dodatkowo błędy $ \nu_1, \nu_2 $ są przeciwnego znaku, to błąd względny jest DUŻY!
+	\item $ fl(a^2-b^2)=[(a+b)(1+\delta_1)(a-b)(1+\delta_2)](1+\delta_3)\\ =  (a^2-b^2)(1+\delta_1)(1+\delta_2)(1+\delta_3) = (a^2-b^2)(1+E)\\
+	 E=\delta_1+\delta_2+\delta_3 + \delta_1\delta_2+\delta_2\delta_3+\delta_1\delta_3+\delta_1\delta_2\delta_3$
+	Poza pierwszymi trzema składnikami, reszta jest grubo poniżej dokładności arytmetyki, zatem $ |E|\tilde{\le} 3\varepsilon $!
+\end{enumerate}
+Zatem licząc różnicę kwadratów, zawsze liczmy wzorem skróconego mnożenia.
+\subsection{Uwarunkowanie zadania}
+Wcześniej były dokładne dane i niedokładne obliczenia, teraz mamy dokładne obliczenia na niedokładnych danych. Policzmy uwarunkowanie zadania różnicy kwadratów.\\
+Zaburzone dane:
+$$\tilde{a}=a(1+\delta_1),\ \tilde{b}=b(1+\delta_2), \ |\delta_1|\le\varepsilon$$
+$$|\frac{\tilde{a}^2-\tilde{b}^2-(a^2-b^2)}{a^2-b^2}| = |\frac{a^2(1+\delta_1)^2-b^2(1+\delta_2)^2-(a^2-b^2)}{a^2-b^2}| \tilde{\le}2\frac{a^2+b^2}{|a^2+b^2|} 
+\text{ - wskaźnik uwarunkowania} $$ 
+Wskaźnik uwarunkowania jest wysoki, co oznacza że niedokładne dane mają duży wpływ na błąd, czyli zadanie jest źle uwarunkowane. Uwaga, tutaj nie miało znaczenia którego algorytmu użyliśmy! Dla niedokładnych danych oba algorytmy dadzą niedokładne wyniki.
+\subsection{Numeryczna poprawność algorytmu}
+\paragraph{Jak obliczyć $ f(x)=1-\cos x $?}
+Dla $ x\approx 0 $ mamy $ \cos x\approx 1 $.
+Jak przekształcić? $$ \cos x=\cos2\frac x2=\cos^2\frac x2-\sin^2\frac x2 $$ Wtedy 
+$$ 1-\cos x= \cos^2\frac x2+\sin^2\frac x2-\cos^2\frac{x}{2}+\sin^2\frac x2=2\sin^2\frac x2$$
+Dzielenie przez 2 jest dość dokładne, a f. tryg. i tak musimy policzyć.
+$$g(x)=\sqrt{x^2+1}-x$$
+Mamy utratę precyzji gdy $ x>>1 $
+$$g(x)=\sqrt{x^2+1}-x=\frac1{\sqrt{x^2+1}+x}$$
+\paragraph{Jak policzyć iloczyn skalarny $ x^Ty $?}
+$$ x^Ty=\sum_{i=1}^n x_iy_i $$
+Sprawdźmy uwarunkowanie:
+$$\tilde{x}_i=x_i(1+\delta_i)$$
+$$\tilde{y}_i=y_i(1+\gamma_i)$$
+$$|\frac{\sum\tilde{x}_i\tilde{y}_i-\sum x_iy_i}{\sum x_iy_i}| \approx |\frac{\sum\tilde{x}_i\tilde{y}_i(\delta_i+\gamma_i)-\sum x_iy_i}{\sum x_iy_i}|\le2\frac{\sum|x_i||y_i|}{|\sum x_iy_i|}\varepsilon$$
+Zadanie jest niestety źle uwarunkowane.
 \end{document}
