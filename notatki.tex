@@ -200,6 +200,8 @@ RQI raileigh quotient iteration, bardzo szybko zbieżne ale niekoniecznie do naj
 %tak naprawdę metoda potęgowa nie na jednym wektorze a na wszystkich, zazwyczaj słabo działa, modyfikacja "raz dodajemy a raz odejmujemy"
 
 
+\section{Wykład 29/11}
+
 \part{Ćwiczenia}
 \section{Układy nadokreślone - kontynuacja}
 \subsection{Zadanie 1.}
@@ -602,4 +604,146 @@ $$\tilde{x}_i=x_i(1+\delta_i)$$
 $$\tilde{y}_i=y_i(1+\gamma_i)$$
 $$|\frac{\sum\tilde{x}_i\tilde{y}_i-\sum x_iy_i}{\sum x_iy_i}| \approx |\frac{\sum\tilde{x}_i\tilde{y}_i(\delta_i+\gamma_i)-\sum x_iy_i}{\sum x_iy_i}|\le2\frac{\sum|x_i||y_i|}{|\sum x_iy_i|}\varepsilon$$
 Zadanie jest niestety źle uwarunkowane.
+
+\section{Ćwiczenia 30/11}
+\paragraph{Znajdź uwarunkowanie zadania obilczania $ Ax $ ze względu na zaburzenia macierzy $ A $}
+Zaburzenie macierzy $ \Delta $ - macierz\\
+mamy $ \tilde{A}=A+\Delta $\\
+Zaburzenie względne:
+$$\frac{\|\tilde{A}-A\|}{\|A\|}=\frac{\|\Delta\|}{\|A\|}$$
+uwarunkowanie zadania:
+$$
+	\frac{\|\tilde{A}x-Ax\|}{\|Ax\|} =
+	\frac{\|\Delta x\|}{\|Ax\|} \le 
+	\frac{\|\Delta\|\| x\|}{\|Ax\|}\frac{\|A\|}{\|A\|} =
+	\frac{\|A\|\| x\|}{\|Ax\|}\frac{\|\Delta\|}{\|A\|}
+$$
+Współczynnik $ \frac{\|A\|\| x\|}{\|Ax\|} $ przy zaburzeniu względnym macierzy jest większy lub równy 1.
+\paragraph{Eliminacja Gaussa}
+$$A=\begin{bmatrix}
+\varepsilon&1\\
+1&1
+\end{bmatrix}, b= \begin{bmatrix}
+1\\2
+\end{bmatrix}, \varepsilon\in(0,1)$$
+Wtedy $ x=\frac{1}{1-\varepsilon} , y=1-\frac{\varepsilon}{1-\varepsilon}$.\\
+Eliminacja Gaussa daje:
+$$A=LU, L=\begin{bmatrix}
+1&0\\
+\frac1\varepsilon&1
+\end{bmatrix}, U=\begin{bmatrix}
+\varepsilon&1\\
+0&1-\frac1\varepsilon
+\end{bmatrix}
+$$
+Co jeśli $ \varepsilon $ jest bliski 0?
+$$ fl(U) = \begin{bmatrix}
+\varepsilon&1\\
+0&-\frac1\varepsilon
+\end{bmatrix} $$
+$$Lz=\begin{bmatrix}1\\2\end{bmatrix},
+z=\begin{bmatrix}z_1\\z_2\end{bmatrix}, z_1=1, z_2=2-\frac1\varepsilon$$
+Ale $ fl(z_2)=-\frac1\varepsilon $!
+$$fl(U)\begin{bmatrix}
+x\\y
+\end{bmatrix}=\begin{bmatrix}
+1\\-\frac{1}{\varepsilon}
+\end{bmatrix}=fl(z)$$
+Wyszło $ x = 0, y = 1 $!
+\paragraph{Z wyborem elementu głównego!}
+po przestawieniu:
+$$\begin{bmatrix}1&1\\\varepsilon&1\end{bmatrix}
+\begin{bmatrix}x&y\end{bmatrix} = 
+\begin{bmatrix}2&1\end{bmatrix}$$
+$$L=\begin{bmatrix}
+1&0\\
+\varepsilon&1
+\end{bmatrix}, U=\begin{bmatrix}
+1&1\\
+0&1-\varepsilon
+\end{bmatrix}
+$$
+$$
+fl(U)=\begin{bmatrix}
+1&1\\
+0&1
+\end{bmatrix}
+$$
+Dla małych $ \varepsilon $ wynik wychodzi $ x=1, y=1 $ - znacznie lepiej! Wybór elementu głównego daje nam numeryczną poprawność.
+\paragraph{Uwarunkowanie zadania}
+$$ cond(A)=\|A\|\|A^{-1}\| $$
+$$ \|A\|_1=2 $$
+$$ \|A^{-1}\|_1= $$
+$$ A^{-1}= \frac{1}{\varepsilon-1}\begin{bmatrix}
+1&-1\\
+-1&\varepsilon
+\end{bmatrix}$$
+$$ \|A^{-1}\|_1= \frac2{1-\varepsilon}$$
+Dla małego $ \varepsilon $ macierz jest dobrze uwarunkowana, jednak bez wyboru el. gł. wynik jest słaby, więc algorytm nie jest numerycznie poprawny.
+\subsection{UwUarunkowanie LZNK}
+$$A=\begin{bmatrix}
+1&1\\
+\varepsilon&0\\
+0&\varepsilon
+\end{bmatrix}$$
+\paragraph{Układem równań normalnych}
+$$A^TAx=A^Tb$$
+$$A^TA=\begin{bmatrix}
+1+\varepsilon^2&1\\
+1&1+\varepsilon^2
+\end{bmatrix}$$
+Ale float!
+$$fl(A^TA)=\begin{bmatrix}
+1&1\\
+1&1
+\end{bmatrix}$$
+Trzeba używać Householderae albo Givensa.
+\subsection{Interpolacja}
+Dane: $ f:\mathbb{R} \rightarrow \mathbb{R} $\\
+Szukamy wielomianu, $ w(x) $ stopnia $n$ t. że $ w(x_i)=f(x_i) $ dla $ i=0,1,\dots,n $.
+\paragraph{Bazy wielomianów:}
+\begin{itemize}
+	\item potęgowa (standardowa) - $ \{1,x,x^2,\dots,x^n\} $
+	\item Newtona - $ \{1, x-x_0, (x-x_0)(x-x_1), \dots,  \prod_{i=0}^{n-1}(x-x_i)\} $
+	\item Langranża - $ \{l_i\} : l_i(x)=\prod_{j=0, j\not=i}^{n-1}\frac{x-x_j}{x_i-x_j} $
+\end{itemize}
+\paragraph{Wartości wielomianów w bazie standardowej}
+Schemat Hornera!
+$$w(x)=\sum_{i=0}^{n}a_ix^i=(a_nx^{n-1}+\dots+a_1)x+a_0$$
+Można wyłączać kolejne $ x $ aż do $ (\dots(a_nx+a_{n-1})x + \dots + a_1)x + a_0 $
+\begin{lstlisting}[escapeinside={(*}{*)}]
+	w = a[n];
+	for k = n - 1 downto 0 do
+		w = w*x+a[k]
+	done
+\end{lstlisting}
+\#taniejniema - $ n $ dodawań, $ n $ mnożeń\\
+\paragraph{Co dla bazy Newtona?}
+Też schemat Hornera, tylko zamiast wyciągać $ x $ wyciągamy $ x-x_i $  - $ 2n $ dodawań, $ n $ mnożeń
+
+\paragraph{Co dla bazy Lagaraża?}
+	Nie jest to dobry pomysł żeby jej używać w obliczeniach numerycznych.
+\paragraph{Czy Lagrażyna to wgl baza?}
+$$l_i(x_k)=\bigg\{\begin{matrix}
+0&i\not=k\\
+1 &\text{wpp}
+\end{matrix}$$
+\paragraph{To co wgl robimy z Lagryzoniem?}
+Postać barycentryczna wielomianu interpolacyjnego Lagrożnego
+$$p(x)=\prod_{i=0}^{n}(x-x_i)$$
+Nie jest on w bazie Newtona!!!1!
+$$l_i(x)=\frac{p(x)}{x-x_i}\prod_{j=0, j\not=i}^n\frac1{x_i-x_j}$$
+Niech $ L(x) $ - wielomian interpolujący funkcję $f(x)$.
+$$L(x)=\sum_{i=0}^{n}c_iL_i(x)$$
+Dla $ x_k $ z całej sumy zostaje tylko $ c_kL_k(x_k)=c_k $.\\
+Łatwo wyznaczyć interpolację, trudno nią interpolować!
+$$L(x)=
+\sum_{i=0}^{n}\frac{p(x)}{x-x_i}\prod_{j=0,j\not=i}^n\frac1{x_i-x_j}f(x_i) = p(x)\sum_{i=0}^{n}\frac{w_i}{x-x_i}f(x_i)
+\text{gdzie}
+w_i=\prod_{j\not=i}\frac1{x_i-x_j}$$
+Pierwsza postać barycentryczna!
+Niech $\tilde{L}$ - wielomian interpolujący funkcję $ f(x)\equiv1 $. Jasne jest, że $\tilde{L}\equiv1$.
+$$\tilde{L}(x)=p(x)\sum_{i=0}^{n}\frac{w_i}{x-x_i}$$
+$$L(x)=\frac{L(x)}{\tilde{L}(x)}=\frac{\sum_{i=0}^{n}\frac{w_i}{x-x_i}f(x_i)}{\sum_{i=0}^{n}\frac{w_i}{x-x_i}}$$
+Druga postać barycentryczna - pozbyliśmy się $ p(x) $, co jest dobre question mark?
 \end{document}
