@@ -746,4 +746,61 @@ Niech $\tilde{L}$ - wielomian interpolujący funkcję $ f(x)\equiv1 $. Jasne jes
 $$\tilde{L}(x)=p(x)\sum_{i=0}^{n}\frac{w_i}{x-x_i}$$
 $$L(x)=\frac{L(x)}{\tilde{L}(x)}=\frac{\sum_{i=0}^{n}\frac{w_i}{x-x_i}f(x_i)}{\sum_{i=0}^{n}\frac{w_i}{x-x_i}}$$
 Druga postać barycentryczna - pozbyliśmy się $ p(x) $, co jest dobre question mark?
+\section{Ćwiczenia 7/12}
+\subsection{Ko-loss}
+\subsection{Interpollacja}
+Mamy wielomian w bazie newtona:
+$$w(x)=\sum_{i=0}^nb_ip_i(x)\ \ \  p_i(x)=\bigg\{\begin{matrix}
+1&i=0\\\prod_{j=0}^{i-1}(x-x_i)&i>0
+\end{matrix}$$
+$$w(x_i)=f(x_i) i=0,\dots,n$$
+A $ f(x_i) $ mamy dane!
+$$b_i=f[x_0,x_1,\dots,x_i]$$
+$$f[x_0,\dots,x_i]=
+\frac{
+	f[x_1,\dots,x_i]-f[x_0,\dots,x_{i-1}]
+}{
+	x_i-x_0
+}$$
+oraz
+$$f[x_i]=f(x_i)$$
+\paragraph{Ręczna robótka} - mamy dane węzły $ \{2,4,0\} $, wartości w węzłach $ \{11,63,7\} $. Liczymy od najmniejszych przypadków. 
+$$
+\begin{matrix}
+2&11&&\\
+4&63&26&\\
+0&7&14&6\\
+&f[x_j]&f[x_j,x_j+1]&f[x_0,x_1,x_2]
+\end{matrix}
+$$
+Interesują nas tylko wartości na przekątnej, więc można to robić w miejscu. Używamy tych współczynników, które zaczynają się od indeksu zerowego. Wtedy $ w(x)=11+26(x-2)+6(x-2)(x-4) $
+\subsection{Błąd interpolacji}
+$$f(x)-w(x)=f[x_0,x_1,\dots,x_n,x]p(x), \text{ dla } x\not=x_i$$
+Mało przydatne, ale okazuje się że:
+$$f[x_1,x_{i+1},\dots,x_{i+k}]=\frac{f^{(k)}(\zeta)}{k!}\text{ o ile } f\in C^k, \zeta\in[x_i,x_{i+k}]$$
+Jak więc zmierzyć ten błąd? Normą supremum. 
+$$\|g\|_\infty=\sup_{x\in[a,b]}g(x)$$
+U nas:
+$$\sup_{x\in[x_0,x_n]}|f(x)-w(x)| = \sup|\frac{f^{(n+1)}(\zeta)}{(n+1)!}p(x)| \le \sup|\frac{f^{(n+1)}(\zeta)}{(n+1)!}|\sup|p(x)|$$
+Zatem: $$\|f-w\|_{\infty, [x_0,x_n]} \le \frac{\|f^{(n+1)}\|_{\infty,[x_0,x_n]}}{(n+1)!} \|p\|_{\infty,[x_0,x_n]}$$
+Wybór węzłów mocno wpływa na błąd!
+\paragraph{Węzły równo odległe}
+$$x_i=x_0+ih,h=\frac{x_n-x_0}{n},i=0,1,\dots,n$$
+Wtedy mamy:
+$$\|p\|_{\infty,[x_0,x_n]}\le \frac{n!h^{n+1}}{4}$$
+\begin{proof}
+	dla $n = 1$:\\
+	$$ p(x)=(x-x_0)(x-x_1),h=x_1-x_0 $$
+	A skoro $ p $ jest stopnia 2 i nieujemne, to najwyższy punkt między miejscami zerowymi ($ x_0, x_1 $) jest dokładnie w połowie, czyli:
+	$$\sup_{x\in[x_0,x_1]}|(x-x_0)(x-x_1)|=\frac{h^2}{4}$$
+	\paragraph{Krok indukcyjny:} $$\sup_{x\in[x_0,x_{n}]}|(x-x_0)\dots(x-x_n)| = \max\{
+		\sup_{x\in[x_0,x_{n-1}]}|\prod_{i}(x-x_i)|,
+		\sup_{x\in[x_1,x_{n}]}|\prod_{i}(x-x_i)|
+	\}$$
+	To pierwsze szacujemy przez: 
+	$$ \sup_{x\in[x_0,x_{n-1}]}|\prod_{i}^{n-1}(x-x_i)| \sup_{x\in[x_0,x_{n-1}]}|(x-x_n)|\le \frac{(n-1)!h^n}{4}nh$$
+\end{proof}
+\subsection{Oszacuj błąd interpolacji} Lagrenżola o normie supremeum dla $ f(x)=\sin x $ na $ [-\frac\pi2;\frac\pi2] $ na węzłach $ \{-\frac\pi2,0,\frac\pi2\} $.\\
+Dla $n=2$:
+Trzecia pochodna to minus cosinus, jej norma supremum to 1, a norma $ p $ jest mniejsza od $ \frac12(\frac\pi2)^3 $
 \end{document}
