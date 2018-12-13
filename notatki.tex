@@ -156,31 +156,31 @@ Gdy $A = A^T$ to wartości i wektory własne rzeczywiste, istnieje $Q$ ortogonal
 
 Wyznaczanie wektora odpowiadającego dominującej wartości własnej (zakładamy że istnieje dokładnie jedna wartość własna że jej moduł ostro większy od innych modułów)
 
-$$||A_x|| = ||\lambda*x|| = |\lambda| * ||x|| = |\lambda| $$ (bo $||x|| = 1$)
+$$\|A_x\| = \|\lambda*x\| = |\lambda| * \|x\| = |\lambda| $$ (bo $\|x\| = 1$)
 
 Metoda potęgowa
 $x_0$ startowy o normie 1
-$$x_{n+1} = A * x_n$$
-$$x_{n+1} := x_{n+1}/||x_{n+1}|| $$
+$$x_{n+1} = A  x_n$$
+$$x_{n+1} := \frac{x_{n+1}}{\|x_{n+1}\|} $$
 skąd nazwa:
-$$x_{n+1} = A*x_n = A*Ax_{n-1} = A^2*x_{n-1} = ... = A^{n+1}*x_0 $$
-nie robić tego w ten sposób, bo A jest duże (ale rzadkie) i będzie coraz mniej rzadkie!
+$$x_{n+1} = Ax_n = AAx_{n-1} = A^2x_{n-1} = \dots = A^{n+1}x_0 $$
+nie robić tego w ten sposób, bo $A$ jest duże (ale rzadkie) i będzie coraz mniej rzadkie!
 Lepiej iteracyjnie, bo tanio mnożyć przez rzadką macierz
 
 Twierdzenie o zbieżności tej metody:
 Załóżmy, że A diagonalizowalna - istnieje Y nieosobliwe że
 $YAY^{-1}$ tworzy macierz diagonalną
 
-$A*y_i = \lambda*y_i$ gdzie $y_i$ to kolumna $Y$
+$Ay_i = \lambda y_i$ gdzie $y_i$ to kolumna $Y$
 
-$$ x_0 = \sum_{1}^{n} \alpha_i * y_i $$
-$$x_n = A^n*x_0 = A^{n-1}*(A*x_0) = $$
-$$ = A^{n-1}*\sum_{1}^{n} \alpha_i*y_i = $$
-$$ = A^{n-1}*\sum_{1}^{n} \alpha_i*\lambda_i*y_i = $$
-$$= \sum_{1}^{n} \alpha_i*\lambda_i^n*y_i = $$
-$$= \lambda_1^n *\sum_{1}^{n} \alpha_i*()\lambda_i/\lambda_1)^n*y_i$$
+$$ x_0 = \sum_{1}^{n} \alpha_i  y_i $$
+$$x_n = A^nx_0 = A^{n-1}(Ax_0) = $$
+$$ = A^{n-1}\sum_{1}^{n} \alpha_i y_i = $$
+$$ = A^{n-1}\sum_{1}^{n} \alpha_i \lambda_i y_i = $$
+$$= \sum_{1}^{n} \alpha_i \lambda_i^n y_i = $$
+$$= \lambda_1^n *\sum_{1}^{n} \alpha_i (\frac{\lambda_i}{\lambda_1})^n y_i$$
 
-Jeżeli $\lambda_1$ dominujące, to $\lambda_i/\lambda_1^n \rightarrow 0 $
+Jeżeli $\lambda_1$ dominujące, to $\frac{\lambda_i}{\lambda_1^n} \rightarrow 0 $
 ($\lambda_1 \neq 0 $)
 
 Odzyskanie wartości własnej na podstawie przybliżenia (znaleźć takie przybliżenie lambdy że norma przybliżenia $A*x-\lambda*x$  minimalna) - jest to zadanie najmniejszych kwadratów
@@ -191,16 +191,206 @@ Transformacje spektrum:
 
 Odwrotna metoda potęgowa na zadania typu 2:
 
-Wartosci wlasne $(A - \mu*I)^{-1}$ to $1/(\lambda-\mu) $
-Kiedy największe? Kiedy $\mu$ blisko $\lambda_i$ to wtedy $1/(\lambda_i - \mu$ dominującą ww
+Wartosci wlasne $(A - \mu*I)^{-1}$ to $\frac1{\lambda-\mu} $
+Kiedy największe? Kiedy $\mu$ blisko $\lambda_i$ to wtedy $\frac{1}{\lambda_i - \mu}$ dominującą ww
 
 RQI raileigh quotient iteration, bardzo szybko zbieżne ale niekoniecznie do najbliższego oryginałowi ww TODO
 
-3. pełny problem - metoda QR TODO
-%tak naprawdę metoda potęgowa nie na jednym wektorze a na wszystkich, zazwyczaj słabo działa, modyfikacja "raz dodajemy a raz odejmujemy"
+tak naprawdę metoda potęgowa nie na jednym wektorze a na wszystkich, zazwyczaj słabo działa, modyfikacja "raz dodajemy a raz odejmujemy"
 
 
-\section{Wykład 29/11}
+3. pełny problem - metoda QR \\
+Skorzystamy z następujących faktów z GAL-u:
+\begin{itemize}
+	\item Macierze $ A, B $ są podobne jeśli istnieje macierz M spełniająca $ A=MBM^{-1} $
+	\item Ortogonalna macierz $ Q $ spełnia $ Q^{-1}=Q^T $
+	\item Macierze podobne mają te same wartości własne
+	\item W macierzy trójkątnej wartości własne są na przekątnej
+\end{itemize}
+Zatem jeśli sprowadzimy macierz $A$ do podobnej do niej macierzy trójkątnej, to będziemy znać wszystkie wartości własne $A$. Można wykorzystać do tego rozkład $QR$. Definiujemy metodę iteracyjną:
+$$A_{k+1}=R_kQ_k, \text{ gdzie } A_k=Q_kR_k$$
+Aby nie wyznaczać całego rozkładu można rozpisać to:
+$$A_{k+1}=R_kQ_k=Q_k^TA_kQ_k$$
+Aby koszt pojedynczej iteracji był niższy, należy na początek użyć Householdera w celu sprowadzenia macierzy $ A $ do postaci Hessenberga (macierz która może mieć niezerowe elementy tam gdzie może albo trójdiagonalna albo górnotrójkątna).
+\section{Wykład 5 - Arytmetyka zmiennoprzecinkowa}
+\subsection{Notacja wykładnicza}
+Np. $6.63\times 10^{-34}$ jest przybliżeniem stałej Plancka.
+U nas będzie tak:
+$$x=-1^s m\beta^{e}$$
+gdzie:
+\begin{enumerate}
+	\item $\beta$ - podstawa (typowo $ \beta =2$)
+	\item $ e $ - wykładnik spełniający $ e_{min}\leq e\le e_{max} $
+	\item $ m $ - mantysa, $ 1\le m < \beta $
+	\item $ s\in\{0,1\} $ - znak liczby
+\end{enumerate}
+Tak można zapisać każdą liczbę rzeczywistą. Jak to zrobić żeby zmieściło się? Zakładamy, że $ m=(f_0\cdot f_1\cdot f_2\cdot f_3\cdot \ldots\cdot f_{p-1})_\beta $, gdzie $ f_i\in\{0,1,\ldots, \beta-1\} $ oraz $ \_\cdot\_ $ jest konkatenacją. To oznacza, że m jest liczbą w systemie o podstawie $ \beta $.
+
+Zatem:
+$$x=-1^s\cdot(\sum_{i=0}^{p-1}f_i\beta^{-i})\beta^e$$
+Zakres wykładników określa nam 
+\subsection{Liczby znormalizowane (maszynowe)}
+$$ m=(1\cdot f_1\cdot f_2\cdot f_3\cdot \ldots\cdot f_{p-1})_2 $$
+To nam daje $ 1\le m<2 $.
+\paragraph{Reprezentacja liczby maszynowej w pamięci}
+Musi być za pomocą sekwencji bitów. Jak?
+Do $e$ dodajemy $bias$, żeby nie musieć pamiętać znaku.
+$$\begin{array}{|c|ccc|ccccc|}
+s&&e+bias&&f_1&f_2&f_3&\ldots&f_{p-1}
+\end{array}$$
+$ e + bias $ będzie zatem miało $ size - p $ bitów.
+\subsection{Standard arytmetyki zmiennoprzecinkowej}
+\paragraph{IEEE-754} - (pierwsza wersja - 1985, najnowsza 2008)
+definiuje następujące typy (dla $ \beta =2 $):
+$$\begin{bmatrix}
+\text{Nazwa potoczna} & p&e_{min}&e_{max}&size&bias&\text{Oficjalna nazwa}\\
+\text{half precision}&11&-14&15&16&15&\text{binary16}\\
+\text{single precision}&24&-126&127&32&127&\text{binary32}\\
+\text{double precision}&53&-1022&1023&64&1023&\text{binary64}\\
+\text{quad precision}&113&-16382&16383&128&16383&\text{binary128}\\
+\text{double extended precision}&64&-16382&16383&80&16383&\text{IA-32}\\
+\end{bmatrix}$$
+Kiedy dodamy $ bias $ do $ e_{min} $ dostajemy 1, a nie 0!
+Zarezerwowane wartości $ e+bias $ to $"0"^n$ oraz $ "1"^n $.
+$$
+\begin{bmatrix}
+\text{Liczba}&\text{Znak}&e+bias&\text{mantysa } (f_1f_2f_3\ldots f_{p-1})\\
++0&0&0\ldots0&0\ldots0\\
+-0&1&0\ldots0&0\ldots0\\
++\infty&0&1\ldots1&0\ldots0\\
+-\infty&1&1\ldots1&0\ldots0\\
+NaN&0&1...1&\{0,1\}^*1\{0,1\}^*
+\end{bmatrix}
+$$
+A skąd te liczby? $ \frac{1}{+0} = \infty $, $\frac{1}{-0}=-\infty$. Co za tym idzie, $ \frac1\infty =0$. A skąd $ NaN $? $ \frac00 $, $ \infty-\infty $ itd.
+
+\paragraph{Orientacyjne zakresy liczb znormalizowanych:}
+$$\begin{matrix}
+&\text{najmniejsza}&\text{największa}\\
+\text{binary32}&\sim10^{-38}&\sim10^{38}\\
+\text{binary64}&\sim10^{-308}&\sim10^{308}\\
+\end{matrix}$$
+
+\paragraph{Bardzo mały system liczb maszynowych}
+$$ \beta=2, p=3, e_{min}=-1, e_{max} =2$$
+Liczby znormalizowane są postaci:
+$$ x=-1^s\cdot(1f_1f_2)_22^e $$
+$e=0$:\\
+1, 1.25, 1.5, 1.75\\
+$e=1$:\\
+2, 2.5, 3, 3.5\\
+$e=2$:\\
+4, 5, 6, 7, 8\\
+$e=-1$:\\
+0.5, 0.625, 0.75, 0.875\\
+
+Ale nie ma nic między 0 i 0.5!
+\paragraph{Liczby zdenormalizowane}
+$$x=-1^s(0f_1f_2\ldots f_{p-1})2^{e_{min}}$$
+Wypełniają pustkę wokół zera.
+$$
+\begin{matrix}
+\text{liczba}&\text{znak}&e+bias&\text{mantysa}\\
+\text{+subnormal}&0&\ldots&\{0,1\}^*1\{0,1\}^*\\
+\text{-subnormal}&1&\ldots&\{0,1\}^*1\{0,1\}^*\\
+\end{matrix}
+$$
+Co w naszym małym systemie daje dodatkowe 3 liczby wokół 0.
+\subsection{Działania arytmetyczne na liczbach IEEE-754}
+\begin{enumerate}
+	\item Reprezentacja liczby rzeczywistej $x: fl(x)$ - najbliższa $ x $ w sensie zaokrąglenia do najbliższej (default, da się zmienić by było do zera lub od zera)
+	\item Jeśli $ x $ jest reprezentowana przez znormalizowaną l. maszynową, to zachodzi $ \frac{|fl(x)-x|}{|x|}\le2^{-p} $, gdzie $ p $ jest ilością bitów w mantysie - $ \nu $ - precyzja arytmetyki. Inaczej mówiąc, $ fl(x)=x(1+\varepsilon), |\varepsilon|\le\nu $
+	\item Dla $ \cdot\in\{+,-,\times,\div\} $ standard wymaga, by: 
+	$$ \begin{matrix}
+	fl(a\cdot b) & = & fl(a\cdot b)\\
+	\begin{matrix}
+	\text{wynik obliczenia }a\cdot b\text{ w arytmetyce }fl\\
+	\text{ gdy } a,b \text{ są liczbami maszynowymi} 
+	\end{matrix}
+	
+	& & 
+	\begin{matrix}
+		\text{reprezentacja dokładnego}\\
+		\text{ wyniku } a\cdot b\text{ w arytmetyce }fl
+	\end{matrix}
+\end{matrix}$$
+\item Zatem możemy uznać, że $ fl(a\cdot b) = (a\cdot b)(1+\varepsilon), |\varepsilon|\le \nu$, z tym że $ \varepsilon $ jest inny dla różnych działań, oraz pod warunkiem, że wynik jest reprezentowalny.
+\end{enumerate}
+\section{Wykład 6 - 15/11}
+Na kolokwium nie będzie arytmetyki zmiennoprzecinkowej ani dzisiejszego wykładu.
+\subsection{Jeszcze trochę $fl$ - a}
+Arytmetyka zmiennopozycyjna nie jest zwykłą arytmetyką.
+\begin{itemize}
+\item Nieprawdą jest że $ \sim(a==b) \iff a\text{ nie jest } b $, bo NaN jest nieporównywalny
+\item nie musi być, że jeśli $ 1 + x == 1 $ to $ x = 0 $. (np. dla $ x= $ precyzja arytmetyki)
+\item unikać testów z równością
+\item wynik $ x - x + 1 $ może być różny w zależności od kolejności działań.
+\item stawiać nawiasy by wymusić kolejność
+\item kumulacja błędów zaokrągleń w obliczeniach 
+\item wzmocnienie wcześniejszych błędów może być katastrofalne
+
+\end{itemize}
+\paragraph{Przykład (redukcja cyfr przy odejmowaniu)}. Obliczmy $ s:=x+y, x,y\in\mathbb{R} $. Ale zamiast $ x, y $ w komputerze mamy tylko $\tilde{x}= fl(x) = x(1+\varepsilon_x), \tilde{y}=fl(y)=y(1+\varepsilon_y) $!
+Zamiast $ s $ obliczymy w $ fl $ wartość $ \tilde{s}=fl(\tilde{x}+\tilde{y})= (\tilde{x}+\tilde{y})(1+\delta)$.
+Zatem błąd wyniku to $ \frac{|s-\tilde{s}|}{|s|} = \frac{|x+y-fl(\tilde{x}+\tilde{y})(1+\delta)|}{|x+y|}=x(1+\varepsilon_x)(1+\delta)+ y(1+\varepsilon_y)(1+\delta)=x(1+E_x)+y(1+E_y)$ gdzie $ E_x=\varepsilon_x+\delta+\varepsilon_x\delta $
+Zatem $ |E_x|\le|\varepsilon_x|+|\delta|+ |\varepsilon_x\delta|\le2ni+ni^2\approx2ni $
+Zatem błąd =$ \frac{|s-\tilde{s}|}{|s|} =\frac{|x+y-x(1+E_x)-y(1+E_y)|}{|x+y|}=\frac{|xE_x-yE_y|}{|x+y|}\le2\frac{|x|+|y|}{|x+y|}ni$
+Zauważmy, że:
+\begin{itemize}
+\item jeśli $ x, y $ - tego samego znaku, to $ \frac{|x|+|y|}{|x+y|}=1 $ i wtedy błąd szacuje się przez $ 2ni $
+\item jeśli $ x\approx y $ to $ \frac{|x|+|y|}{|x+y|} >> 1 $ i wtedy błąd ograniczamy przez bardzo dużą liczbę
+\end{itemize}
+\subsection{Katastrofy spowodowane $ fl $ - em}
+\begin{itemize}
+\item zatonięcie całej platformy wiertniczej spowodowanej niewłaściwym użyciem pakietu numerycznego.
+\item Rakiety patriot - im dłużej stały włączone, tym więcej celności traciły. Systemowy zegar liczył ticki co $ \frac1{10} $ sekundy. Więc $t * \frac1{10}$ daje tym gorszy błąd im więcej ticków.
+\item rakiety arian - double został przepisany na short inta
+\item rakieta nie poleciała na marsa bo system imperialny vs. metryczny
+\item partia zielonych w niemczech dostała 4.76\% głosów ale excel zaokrąglił w górę i przeszli próg wyborczy
+\item indeks giełdowy jechał w dół a powinien był w górę, to przez częstą aktualizację z błędem
+
+\end{itemize}
+\subsection{Błędy w obliczeniach numerycznych}
+Mamy zadanie obliczeniowe, algorytm i dane. Niech $ P_i: \mathbb{R}^n\supseteq D\rightarrow\mathbb{R}^m $ \\
+Problem obliczeniowy: mając dane $ x\in D $, wyznacz $y=P(x)$.\\
+\paragraph{Przykłady}
+\begin{itemize}
+\item Dla zadanej funkcji rzeczywistej oblicz $ y=f(x) $
+\item dla zadanych $ A\in\mathbb{R}^{n\times n} $ oblicz $ y=Ax $ ($ P=Ax $)
+\item dla $ A\in\mathbb{R}^{n\times n} $ nieosobliwej oraz $ b\in\mathbb{R}^n $ oblicz $ b\in\mathbb{R}^n $ t. że $ Ay=b $ ($P=A^{-1}x $)
+\item dla $ f: \mathbb{R}\rightarrow\mathbb{R}$ oblicz $ y $ t. że $f(y)=0$ ($P(x)=f^{-1}(x)  $)
+\end{itemize}
+Zwykle szukamy nie algorytmu dla danego zadania, tylko klasy zadań.
+\paragraph{Definicja}
+Błąd bezwzględny: $ \|x-\tilde{x}\| $.
+Błąd względny: $ \frac{\|x-\tilde{x}\|}{\|x\|} (x\not=0)$.
+Nieuniknione w $ fl $ są błąd reprezentacji danych oraz wyników
+Algorytm jest silnie numerycznie poprawny (backward stable) jeśli wynik jego działania w fl można zinterpretować jako wynik zadania obliczeniowego (w arytmetyce dokładnej ) na danych lekko zaburzonych.\\
+Algorytm jest numerycznie poprawny, jeśli wynik też może być zaburzony na poziomie reprezentacji.
+\paragraph{Uwarunkowanie zadania numerycznego}
+Jak zaburzenie danych wpływa na zaburzenie algorytmu?
+$$cond_{abs}(P,x):=\sup_{\Delta\not=0, \|\Delta\|<\delta}\frac{\|P(x+\Delta)-P(x)\|}{\|\Delta\|}$$
+
+- uwarunkowanie zadania P w punkcie x\\
+Innymi słowy, $ \|P(x+\Delta)-P(x)\|\le cond_{abs}(P,x)\|\Delta\| $, gdzie $ \Delta $ jest najmniejsza możliwa dla danych zaburzeń.
+Można to idealizować i rozważać przypadek graniczny, gdy $ \|\Delta\|\rightarrow0 $
+$$cond_{abs}(P, x):=\lim_{\|\Delta\|\rightarrow0}\frac{\|P(x+\Delta)-P(x)\|}{\|\Delta\|}$$
+Analogicznie, uwarunkowanie względnie: 
+$$\frac{\|P(x+\Delta)-P(x)\|}{\|P(x)\|}\le cond_{rel}(P, x)\frac{\|\Delta\|}{\|x\|}$$
+\paragraph{Przykład}
+\begin{itemize}
+\item $ P(x)= f(x) $:  $ cond_{abs}(P, x)=|f'(x)| $
+\item $ Ax=b, A\tilde x=\tilde b$
+\end{itemize}
+Jak błąd wzgl. $x$ zależy od błędu wzgl. $b$?
+niech błąd względny $b \le \varepsilon$, wtedy 
+
+$$\tilde{x} = A^{-1}\tilde{b}=A^{-1}(b+\Delta)=A^{-1}b+A^{-1}\Delta$$
+zatem $\|x-\tilde{x}\|\le\|A^{-1}\Delta\|\le\|A^{-1}\|\|\Delta\|$
+stąd $$\text{błąd}  \le  \|A^{-1}\|\frac{\|\Delta\|}{\|b\|}\frac{\|b\|}{\|x\|}<=\|A^{-1}\| \varepsilon \frac{\|Ax\|}{\|x\|} <= \|A^{-1}\|\|A\||\varepsilon =cond(A)varepsilon$$
+Można pokazać ogólniej, że jeśli $ Ax=b $ oraz $ \tilde{A}\tilde{x}=\tilde{b} $, gdzie zaburzenia wzgl. $ b $ i $ A $ są na poziomie dostatecznie małego epsilona, to błąd $ x $ da się oszacować przez $ 4cond(A)\varepsilon $.
+
+
 
 \part{Ćwiczenia}
 \section{Układy nadokreślone - kontynuacja}
