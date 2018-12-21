@@ -967,11 +967,11 @@ Interesują nas tylko wartości na przekątnej, więc można to robić w miejscu
 \subsection{Błąd interpolacji}
 $$f(x)-w(x)=f[x_0,x_1,\dots,x_n,x]p(x), \text{ dla } x\not=x_i$$
 Mało przydatne, ale okazuje się że:
-$$f[x_1,x_{i+1},\dots,x_{i+k}]=\frac{f^{(k)}(\zeta)}{k!}\text{ o ile } f\in C^k, \zeta\in[x_i,x_{i+k}]$$
+$$f[x_1,x_{i+1},\dots,x_{i+k}]=\frac{f^{(k)}(\xi)}{k!}\text{ o ile } f\in C^k, \xi\in[x_i,x_{i+k}]$$
 Jak więc zmierzyć ten błąd? Normą supremum. 
 $$\|g\|_\infty=\sup_{x\in[a,b]}g(x)$$
 U nas:
-$$\sup_{x\in[x_0,x_n]}|f(x)-w(x)| = \sup|\frac{f^{(n+1)}(\zeta)}{(n+1)!}p(x)| \le \sup|\frac{f^{(n+1)}(\zeta)}{(n+1)!}|\sup|p(x)|$$
+$$\sup_{x\in[x_0,x_n]}|f(x)-w(x)| = \sup|\frac{f^{(n+1)}(\xi)}{(n+1)!}p(x)| \le \sup|\frac{f^{(n+1)}(\xi)}{(n+1)!}|\sup|p(x)|$$
 Zatem: $$\|f-w\|_{\infty, [x_0,x_n]} \le \frac{\|f^{(n+1)}\|_{\infty,[x_0,x_n]}}{(n+1)!} \|p\|_{\infty,[x_0,x_n]}$$
 Wybór węzłów mocno wpływa na błąd!
 \paragraph{Węzły równo odległe}
@@ -993,4 +993,123 @@ $$\|p\|_{\infty,[x_0,x_n]}\le \frac{n!h^{n+1}}{4}$$
 \subsection{Oszacuj błąd interpolacji} Lagrenżola o normie supremeum dla $ f(x)=\sin x $ na $ [-\frac\pi2;\frac\pi2] $ na węzłach $ \{-\frac\pi2,0,\frac\pi2\} $.\\
 Dla $n=2$:
 Trzecia pochodna to minus cosinus, jej norma supremum to 1, a norma $ p $ jest mniejsza od $ \frac12(\frac\pi2)^3 $
+\section{Ćwiczenia 14/12}
+\subsection{Trochę Largo al żatotum}
+\paragraph{Błąd interpolacji} $\|f-w\|_\infty \le \frac{\|f^{(n+1)}\|_\infty}{(n+1)!}\|p\|_\infty, p(x)=\prod_{i=0}^n(x-x_i)$
+Miejsca zerowe wielomianu czebyszewa stopnia $n$:
+$$T_n(x)=\cos(n \arccos x), x\in[-1,1]$$
+\paragraph{Twierdzenie. }Wielomiany $ \frac1{2^{n-1}}T_n(x), n \ge 1 $ mają najmniejszą normę $ \|\cdot\|_\infty $ na $ [-1,1] $ spośród wszystkich wielomianów z "1" przy $x^n$
+\paragraph{Miejsca zerowe wielomianu $ T_n(x) $ przeskalowane na przedział $ [a,b] $}
+Węzły czebyszewa:
+$$x_i=\frac{a+b}{2}+\frac{a-b}{2}\cos(\frac{2i+1}{2n+2}\pi), i=0,1,\dots,n$$
+$$\|p\|_\infty = (\frac{b-a}{2})^{n+1}\frac{1}{2^n}\text{ dla węzłów czebyszewa}$$
+\subsubsection{Zadanie}
+Znajdź najmniejsze $ n $ t. że błąd aproksymacji jednostajnej funkcji $ f(x)=\sin x $ na $ [0;4] $ wielomianem interpolacyjnym stopnia $ n $ jest mniejszy niż $ 2^{-10} $ dla węzłów Czebyszewa.
+\begin{proof}[Rozwiązanie]
+	Czyli minimalizujemy błąd interpolacji $ \|f-w\|_{\infty, [a,b]}<2^{-10} $ - trzeba znaleźć $ n $ takie, że to zachodzi. Wystarczy, że $ \frac{\|f^{(n+1)}\|_{\infty, [a,b]}}{(n+1)!}\|p\|_\infty <2^{-10} $. A dowolna pochodna sinusa spełnia $ \|f^{(n+1)}\|_{\infty, [0,4]}=1 $, bo norma nieskończoność funkcji na przedziale to jej supremum z zbioru wartości bezwględnych wartości funkcji. A $ \|p\|_\infty=(\frac42)^{n+1}\frac{1}{2^n}=2 $, zatem $ \frac{1}{(n+1)!}2<2^{-10}  \implies (n+1)!>2^{11} $, zatem $ n=6 $.
+\end{proof}
+\subsubsection{Uwaga}
+nieważne jak wybierzemy węzły, zawsze się znajdzie funkcja która jest źle przybliżana przez Logrożka. Z drugiej strony, dla każdej funkcji istnieje ciąg wyborów węzłów, dla którego Logaryż jest zbieżny.
+\subsection{Interpolacja wielomianowa Hermite'a}
+węzły $ \{x_0, \dots, x_k\} $\\
+$ w(x) $ to wielomian stopnia $ n $ interpolujący $ f(x) $ t. że 
+$$ w^{(j)}(x_i)=f^{(j)}(x_i)\ \ j=0,1,\dots,m_i-1\ \ i=0,1,\dots, k $$
+Liczba warunków: $ \sum_{i=0}^km_i=n+1 $\\
+Węzły wielokrotne: $ \{x_0, \dots, x_0, x_1, \dots, x_1, \dots, x_k, \dots, x_k\} $ - $ i $-ty węzeł jest wypisany $ m_i $ razy.\\
+Baza Newtona: $\{1, (x-x_0), \dots, (x-x_0)^m_0, (x-x_0)^m_0(x-x_1), \dots, \prod_{i}^{k}(x-x_i)^{m_i - [i=k]}\}$
+$$f[x_i, x_{i+1}, \dots, x_{i+j}]=\frac{f[x_{i+1},\dots, x_{i+j}]-f[x_i, \dots, x_{i+j-1}]}{x_{i+j}-x_i}$$
+Przy czym:
+$$\text{Jeśli węzeł ma krotność $ j+1 $ to: }f[x_i, \dots, x_i]=\frac{f^{(j)}(x_i)}{j!}$$
+\subsubsection{Zadanie}
+Znajdź wielomian interpolacyjny Hermite'a t. że $ w(1)=2, w'(1)=3, w(2)=6, w'(2)7, w''(2)=8 $.
+\begin{proof}
+	Szukamy wielomianu stopnia 4.
+	węzły $ \{1, 1, 2, 2, 2\} $
+$$	\begin{array}{c|ccccc}
+1&2&&&&\\
+1&2&3&&&\\
+2&6&4&1&&\\
+2&6&7&3&2&\\
+2&6&7&4&1&-1
+	\end{array}$$
+Baza Newtona:
+	$$\{1, x-1, (x-1)^2, (x-1)^2(x-2), (x-1)^2(x-2)^2\}$$
+	Wielomian:
+	$$w(x)=2+3(x-1)+(x-1)^2+2(x-1)^2(x-2)-(x-1)^2(x-2)^2$$
+\end{proof}
+\subsection{Zadanie}
+Udowodnij, że jeśli wśród $ n $ węzłów z $[-1,1]$ znajduje się 0, to wielomian $w$ stopnia $ n-1 $ interpolacyjny Lagorża dla funkcji $ f(x)=\sinh(x)=\frac{e^x-e^{-x}}{2} $ spełnia:  $$ |w(x)-f(x)| \le \frac{2^n}{n!}|f(x)|\ (|x| \le 1)$$
+\begin{proof}
+$$|w(x)-f(x)|=\frac{|f^{(n)}(\xi)|}{n!}\prod_{i=0}^{n-1}|x-x_i|$$
+$$(\sinh(x))'=\cosh(x)=\frac{e^x++e^{-x}}{2}$$
+$$|\sinh(x)| \le |\cosh(x)| \le \frac{e+\frac1e}{2} \le 2$$
+Jeden z węzłow jest równy 0, bez straty ogólności $ x_0=0 $
+$$\prod_{i=0}^{n-1}|x-x_i|=|x|\prod_{i=1}^{n-1}|x-x_i| \le |x|2^{n-1}$$
+Okazuje się że $ |x| \le |\sinh(x)| $. Zatem:
+$$|w(x)-f(x)|=\frac{|f^{(n)}(\xi)|}{n!}\prod_{i=0}^{n-1}|x-x_i| \le \frac{2}{n!}|x|2^{n-1} \le \frac{2^n}{n!}|\sinh(x)|$$
+\end{proof}
+\subsection{Splajny}
+Dzielimy $ [x_0,x_n] $ na $ n $ podprzedziałów, i na każdym z nich osobno splajn jest wielomianem.
+\subsubsection{Splajan liniowy (stopnia 1)}
+Jeśli $ s_i(x) $ jest wielomianem stopnia 1, to splajnem liniowym nazywamy funkcję ciągłą $ s $ spełniającą
+$$s(x)=s_i(x)\text{ dla }x\in[x_i, x_{i+1}), i=0,1,\dots,n-1$$
+Splajny liniowe na $ [x_0, x_n] $ tworzą $ n+1 $-wymiarową przestrzeń liniową.
+\subsubsection{Błąd interpolacji dla $ f\in C^2 $}
+
+$$\|f-s\|_{\infty,[a,b]} \le \max_{i=0,\dots,n-1}\|f-s_i\|_{\infty,[x_i, x_{i+1}]}
+$$
+$$\|f-s_i\|_{\infty,[x_i, x_{i+1}]} \le \frac{\|f''\|}{2}\frac{h_i^2}{4}$$
+
+\section{Ćwiczenia 21/12}
+\subsection{Gładkość splajnów liniowych}
+Jeśli $ s $ - splajn liniowy interpolujący funkcję $ f\in C^1 $ w węzłach $ x_0<\dots< x_n $, to zachodzi:
+$$\int_{x_0}^{x_n}(s'(x))^2dx\le \int_{x_0}^{x_n}(f'(x))^2dx$$
+Pochodną liczymy przedziałami i zakładamy że na krawędziach nie mamy wartości, a to nie psuje całkowalności.
+\begin{proof}
+	Niech $ g=f-s $.
+$$\int_{x_0}^{x_n}(f'(x))^2dx=\int_{x_0}^{x_n}(f'(x)-s'(x)+s'(x))^2dx=$$
+$$\int_{x_0}^{x_n}(g'(x))^2dx+\int_{x_0}^{x_n}(s'(x))^2dx+2\int_{x_0}^{x_n}g'(x)s'(x)dx$$
+Zauważmy, że $s'$ jest przedziałami stała:
+$$\int_{x_0}^{x_n}g'(x)s'(x)dx=\sum_{i=0}^{n-1}\int_{x_i}^{x_{i+1}}g'(x)s'(x)dx=\sum_{i=0}^{n-1}c_i\int_{x_i}^{x_{i+1}}g'(x)dx=\sum_{i=0}^{n-1}c_i(g(x_{i+1}) - g(x_i))=0$$
+Zatem:
+$$\int_{x_0}^{x_n}(g'(x))^2dx+\int_{x_0}^{x_n}(s'(x))^2dx+2\int_{x_0}^{x_n}g'(x)s'(x)dx=$$
+$$\int_{x_0}^{x_n}(g'(x))^2dx+\int_{x_0}^{x_n}(s'(x))^2dx$$
+\end{proof}
+\subsection{Splajny kubiczne}
+Niech $ s $ - splajn kubiczny na węzłach $ x_0 < \dots< x_n $
+$$s(x)=s_i(x), x\in [x_i, x_{i+1})$$
+$$s_i(x) \text{ jest wielomianem 3 stopnia na } [x_i, x_{i+1}]$$
+$$s\in C^2([x_0,x_n])$$
+$$s_i^{(j)}(x_{i+1})=s_{i+1}^{(j)}(x_{i+1}) \text{ dla } j=0,1,2$$
+Interpolujemy: 
+$ s(x_i)=f(x_i), i=0,\dots,n $
+\subsubsection{Zadanie}
+Niech $ s $ - splajn kubiczny t. że na $ [x_{k-1}, x_k] $ i $ [x_{k+1}, x_{k+2}] $ $ s \equiv0$. Czy pomiędzy też musi?
+\begin{proof}[Rozwiązanie]
+$$s_k(x)=a+b(x-x_k)+c(x-x_k)^2+d(x-x_k)^3$$
+Po pierwsze $ s_k(x_k)=0\implies a=0 $.\\
+Po drugie, $ s_k'(x_k)=b+2c(x-x_k)+3d(x-x_k)^2=0\implies b=0 $. \\
+Po trzecie, $ s_k''(x_k)=2c+6d(x-x_k)=0\implies c=0 $ \\
+Więc wiemy, że $ s_k(x)= d(x-x_k)^3$.\\
+A skoro musi być, że $ s_k(x_{k+1})=0$, oraz $ x_k\not=x_{k+1} $, to $ d(x_{k+1}-x_k)^3=0\implies d=0 $.\\
+A więc musi.
+\end{proof}
+Zadanie można też rozwiązać z interpolacji Pustelnika na dwóch podwójnych węzłach: $ \{x_k, x_k, x_{k+1}, x_{k+1}\} $. Konstrukcja tabelki pokazuje, że wszędzie są zera, więc i funkcja też musi być zerem.
+\subsection{Gładkość splajnów kubicznych}
+Jeśli $ f\in C^2, a=x_0<\dots<x_n=b $, $ s $ - splajn kubiczny naturalny (czyli drugie pochodne na końcach są zerem), to wielomian interpolujący $ f $ w węzłach $ x_0, \dots, x_n $, to:
+$$\int_{a}^{b}(s''(x))^2dx\le\int_{a}^{b}(f''(x))^2dx$$
+\begin{proof}
+Dowód ten sam co wyżej tylko do pokazania że całka iloczynu jest zerem trzeba użyć całkowania przez części i rozpisać sumę, a tam się wszystko zje poza pierwszym i ostatnim kawałkiem, które się zerują bo druga pochodna na końcach jest zero.
+\end{proof}
+\subsection{B-splajny}
+$$B_i^0=\bigg\{\begin{matrix}
+1&x_i\le x<x_{i+1}\\
+0&\text{wpp}
+\end{matrix}$$
+$$B^k_i(x)=\frac{x-x_i}{x_{i+1}-x_i}B_i^{k-1}(x)+\frac{x_{i+k+1}-x}{x_{i+k+1}-x_{i+1}}B_{i+1}^{k-1}(x)$$
+Jeśli $ s $- splajn kubiczny, to $ s $ można zapisać w tej bazie:
+$$s(x)=\sum_{j=-3}^{n-1} c_jB_j(x), x\in[x_0,x_n]$$
+\subsubsection{Jak wyznaczyć bazę dla splajnu interpolacyjnego naturalnego?}
+$$\sum_{j=-3}^{n-1}c_jB_j(x_i)=c_{i-3}(x_i)+c_{i-2}B_{i-2}(x_i) + c_{i-1}B_{i-1}(x_i)=f(x_i)$$
+A to jest równanie liniowe, z macierzą 5-diagonalną, (ale na zewnętrznych diagonalach jest tylko po jednej jedynce, więc gg ez)
 \end{document}
