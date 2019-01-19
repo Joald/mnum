@@ -1,0 +1,103 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{polski}
+\usepackage{textcomp}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{frame=tb,
+	language=Bash,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	escapeinside={(*}{*)},
+	tabsize=4
+}
+\cfoot{Jacek Olczyk}
+\title{Seria 2}
+\author{Jacek Olczyk}
+\begin{document}
+\maketitle
+\begin{enumerate}
+\item[5.] Funkcję $f(x)=\cos(2x)$ interpolujemy na przedziale $[-1,4]$ w punktach $ \{-1, 1, 2, 3, 4\} $ funkcją $ w $ będącą wielomianem liniowym na $ [-1,1] $ oraz wielomianem stopnia co najwyżej 3 na $ [1,4] $. Czy taka funkcja $ w $ jest wyznaczona jednoznacznie? Oszacuj możliwie dokładnie błąd interpolacji $ e=\|f-w\|_{\infty, [-1, 4]} $.
+
+\begin{proof}[Rozwiązanie]
+Tak, taka funkcja jest wyznaczona jednoznacznie, ponieważ każdy z wielomianów jest wyznaczony jednoznacznie, jako że wiadomo z wykładu że interpolacja Lagrange'a w $ n + 1 $ węzłach wielomianem stopnia $ n $ zawsze istnieje i jest jednoznaczna. Na przedziale $ [-1,1] $ wielomian jest liniowy, a jako że cosinus jest parzysty to w obu węzłach jest ta sama wartość, zatem na całym tym przedziale $ w(x)=\cos2<0 $. Zatem skoro $ \cos0=1 $, to na tym przedziale błąd interpolacji wynosi $ 1 - cos(2) $. Na przedziale $ [1,4] $ możemy ograniczyć z góry błąd używając wzorów z ćwiczeń: 
+\begin{align*}
+\|f-w\|_{\infty, [1,4]} &\le 
+\frac{
+	\|f^{(n+1)}\|_{\infty,[1,4]}
+}{
+	(n+1)!
+} \|p\|_{\infty,[1,4]}\\
+&\le \frac{
+	\|f^{(4)}\|_{\infty,[1,4]}
+}{
+	4!
+} \|p\|_{\infty,[1,4]}\\
+&\le\frac{ \|16\cos(2x)\|}{24}\|p\|_{\infty,[1,4]}\\
+&\le \frac{2}{3}\|p\|_{\infty,[1,4]}\\
+&\le \frac{2}{3} \cdot \frac{3!}{4}\\
+&\le 1 
+\end{align*}
+Jako że $ 1 < 1 - \cos2 $, to $ 1 - \cos2 $ jest dokładnym górnym ograniczeniem błędu interpolacji.
+\end{proof}
+\newpage
+\item [7.] Wyznacz wielomian $ w $ stopnia co najwyżej 2 optymalny dla funkcji $ f(x)=x^3 $ w sensie aproksymacji średniokwadratowej w normie $ \|g\|=\sqrt{(g, g)} $ zadanej przez iloczyn skalarny $ (f, g)=\int_{0}^{1}f(x)g(x)xdx $. Oblicz $ \|f-w\| $.
+\begin{proof}[Rozwiązanie]
+	Baza = $ \{1, x, x^2\} $.
+	\begin{align*}
+		G&=
+		\begin{bmatrix}
+		\int_{0}^{1}xdx & \int_{0}^{1}x^2dx & \int_{0}^{1}x^3dx\\
+		\int_{0}^{1}x^2dx & \int_{0}^{1}x^3dx & \int_{0}^{1}x^4dx \\
+		\int_{0}^{1}x^3dx & \int_{0}^{1}x^4dx & \int_{0}^{1}x^5dx 
+		\end{bmatrix} =
+		\begin{bmatrix}
+			\frac12&\frac13&\frac14\\
+			\frac13&\frac14&\frac15\\
+			\frac14&\frac15&\frac16
+		\end{bmatrix} &
+		F=	\begin{bmatrix}
+			\frac15\\ \frac16\\ \frac17
+		\end{bmatrix}\\
+		Gc&=F & c =
+		\begin{bmatrix}
+			\frac4{35}\\
+			\frac67\\
+			\frac{12}7
+		\end{bmatrix}
+	\end{align*}
+	\begin{align*}
+		w(x)&=\frac4{35}- \frac67x + \frac{12}7x^2 \\
+		w(x) - f(x) &= \frac4{35}- \frac67x + \frac{12}7x^2 - x^3\\
+		\|w-f\|&=\sqrt{\int_{0}^{1}(w(x)-f(x))^2xdx}=\\
+		&=  \sqrt{\int_{0}^{1}\frac{16}{1225} - \frac{48}{245}x^2 + \frac{276}{245}x^3 - \frac{776}{245}x^4 + \frac{228}{49}x^5 - \frac{24}{7}x^6 + x^7dx}=\\
+		&=\sqrt{\frac1{9800}}=\frac{\sqrt2}{140}
+	\end{align*}
+	
+\end{proof}
+\end{enumerate}
+\end{document}

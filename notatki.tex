@@ -1136,6 +1136,7 @@ Błąd aproksymacji: $ \|f-h^*\| $
 dla bazy ortogonalnej:
 $\|f-h^*\|^2=\|f\|^2-\|h^*\|^2=\|f\|^2-\sum_{j=1}^n \frac{(f,\varphi_j)^2}{(\varphi_j, \varphi_j)}$
 \subsection{"Formuła dwuczłonowa" dla wielomianów ortogonalnych względem iloczynu skalarnego $ (\cdot, \cdot) $}
+Ciągiem $ a $ możemy przeskalować bazę względem bazy standardowej.\\
 $\varphi_{-1}\equiv0,\varphi_0=a_0$
 $$\varphi_k(x)=(\alpha_kx-\beta_k)\varphi_{k-1}(x)-\gamma_k\varphi_{k-2}(x)\ \  k=1,2,\dots$$
 $$\text{gdzie } \alpha_k=\frac{a_k}{a_{k-1}}, \beta_k=\alpha_k\frac{(x\varphi_{k-1},\varphi_{k-1})}{(\varphi_{k-1},\varphi_{k-1})}, \gamma_k=\frac{\alpha_k}{\alpha_{k-1}}\frac{(\varphi_{k-1},\varphi_{k-1})}{(\varphi_{k-2},\varphi_{k-2})}$$
@@ -1225,4 +1226,61 @@ $$b=\frac{1}{2\sqrt{x^*}}$$
 $$x^*=\frac14$$
 $$\delta=\frac18$$
 $$w(x)=x+\frac18$$
+\section{Ćwiczenia dalej}
+\subsection{Zadanso}
+Funkcja $ f $ ciągła na przedziale $ I $: $ f\in C(I) $. Szukamy funkcji stałej najlepiej aproksymującej $ f $ w normie $ \sup $.
+Rozwiązanie: znajdujemy ekstrema i bierzemy średnią.
+\paragraph{Twierdzenie o alternansie Czebyszewa}
+Niech $ w(x) $ - wielomian stopnia $ n $.\\
+Alternans: układ punktów $ \{x_i\}, i=0,\dots, n+1$ taki że: $$ f(x_i) - w(x_i)=s(-1)^i\|f-w\|_\infty, s=\pm 1 $$
+Wtedy $ w $ jest ENA w normie $ \sup \iff$ istnieje alternans.
+\subsection{Zadanso 2}
+Niech $ f(x)=x^{n+1} $. Szukamy wileomianu stopnia $ n $ najlepiej aroksymującego $ f $ nna $ [-1,1] $ w normie $\sup$.
+Czyli minimalizujemy $ \|f-w\|_\infty $.
+$ f-w  $ jest wielomianem stopnia $ n+1 $. Z twierdzenia o węzłach czebyszewa (one minimalizują normę supremum):\\
+$ T_{n+1}(x) $ - wielomian Czebyszewa\\
+$ \tilde{T}_{n+1}(x)=\frac{1}{2^n}T_{n+1}(x) \leftarrow$  ma 1 przy $ x^{n+1} $ oraz najmniejszą normę sup wśród wielomianów stopnia $ n + 1 $.
+Zatem $ f-w=\tilde{T}_{n+1}\implies w(x)=x^{n+1}-\tilde{T}_{n+1}(x) $
+\subsection{Algorytm Clenshawa}
+Obliczanie wartości wielomianu: 
+$$ w(x)=\sum_{i=0}^{n}c_i\varphi_i(x), \{\varphi_i\}\text{  - układ ortogonalny} $$
+Potrzeba współczynników z formuły trójczłonowej.
+\begin{lstlisting}[escapeinside={(*}{*)}]
+d[n+2]=d[n+1]=0;
+for k = n, n-1, (*$\dots$*), 0:
+	d[k]= ((*$\alpha$*)[k+1] * x - (*$\beta$*)[k+1]) * d[k+1] - (*$\gamma$*)[k+2] * d[k+2] + c[k]
+w(x) := d[0] * a[0]
+\end{lstlisting}
+Wyprowadza się to rozpisując $ \varphi_n(x) $ z formuły trójczłonowej
+\subsection{Równania nieliniowe}
+$ x^*:f(x^*)=0 $
+\subsubsection{Metoda bisekcji}
+Startujemy z przedziału $ [a,b] $ t. że $ f(a)f(b)<0 $ dla $ f\in C([a,b]) $
+Bierzemy $ c=\frac{a+b}{2} $ i do następnego kroku bierzemy ten z przedziałów $ [a,c], [c,b] $ dla którego $ f $ ma na końcach różne znaki.
+\paragraph{Błąd} -  W $ n+1 $-szym kroku $ e_{n+1}=\frac12 e_n $.
+Zbieżna globalnie.
+\subsubsection{Metoda Newtona (stycznych)}
+$ x_0 $ - dane\\
+$ x_{n+1} =x_n-\frac{f(x_n)}{f'(x_n)},\ \ n=0,1,\dots$
+czyli znajdujemy punkt przecięcia stycznej w $ x_n $ z osią $ x $. 
+Jakie założenia chcemy? $ f\in C^1 $ na pewno, jak chcemy kwadratową zbieżność to potrzeba $ f\in C^2 $. Do tego trzeba też $ f'(x) $ w otoczeniu $ x^* $ musi być różna od zera. No i $ x_0 $ musi być dostatecznie blisko $ x^* $. Wtedy metoda jest zbieżna, a błąd to: 
+$$ e_{n+1}=\frac{f''(\xi_n)}{2f'(x_n)}e_n^2, \xi_n \in [x_n, x^*] $$
+\subsubsection{Metoda Herona liczenia pierwiastka}
+Niech $ a>0, x_0>0 $. 
+$$ x_{n+1}=\frac12(x_n+\frac a{x_n}), x_n \rightarrow \sqrt a $$
+
+Jest to metoda Newtona dla $ f(x)=x^2-a $, i jest zbieżna globalnie.
+\paragraph{Twierdzenie.} Jeśli $ f \in C^2(\mathbb{R}) $ jest wypukła i rosnąca na $ \mathbb{R} $ oraz $ \exists_{x^*\in\mathbb{R}}f(x^*)=0 $ to metoda Newtona jest zbieżna dla dowolnego $ x_0\in\mathbb{R} $
+\begin{proof}
+	$$ f''>0, f'>0 $$
+	$$x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}$$
+	$$e_n=x_n-x^*$$
+	$$e_{n+1}=\frac{f''(\xi_n)}{2f'(x_n)}e_n^2$$
+	Wtedy $ e_{n+1}>0 $, czyli $ x>x^* $, stąd $ f(x_{n+1})>f(x^*)=0 $, zatem $ x_{n+1}<x_n $, czyli $ x_n $ jest ciągiem ograniczonym z dołu i ograniczonym, czyli zbieżnym.
+\end{proof}
+\subsection{Jak policzyć $\frac{1}{R}$ dla $ R>0 $ nie umiejąc dzielić?}
+$ x-\frac1R $ - zbiega szybko, ale nic nie daje bo trzeba dzielić
+$ R-\frac1x $, $ f(\frac1R)=0 $, $ f'(x)=-\frac1{x^2} $
+$ x_{n+1} = x_n=\frac{\frac{1}{x_n}-R}{-\frac{1}{x^2_n}}=2x_n-Rx_n^2=x_n(2-Rx_n)$
+
 \end{document}
