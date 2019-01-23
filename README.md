@@ -14,6 +14,7 @@ ktoś ignoruje błąd gdzieś na świecie umiera mały kotek :(
 ### Kontrybutorzy:
 - Jacek Olczyk (Joald) 
 - Kamila Śledź (ksledz)
+- Tomasz Miśków (tmiskow)
 
 ### Czym to się różni od [zeszłorocznego skryptu](https://github.com/0mp/MetodyNumeryczneMIMUW2017)?
 A tym, że w tym roku idziemy w innej kolejności, że staram się uchwycić to co było powiedziane na wykładzie 
