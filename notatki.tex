@@ -1253,20 +1253,20 @@ for k = n, n-1, (*$\dots$*), 0:
 w(x) := d[0] * a[0]
 \end{lstlisting}
 Wyprowadza się to rozpisując $ \varphi_n(x) $ z formuły trójczłonowej
-\subsection{Równania nieliniowe}
+\section{Równania nieliniowe}
 $ x^*:f(x^*)=0 $
-\subsubsection{Metoda bisekcji}
+\subsection{Metoda bisekcji}
 Startujemy z przedziału $ [a,b] $ t. że $ f(a)f(b)<0 $ dla $ f\in C([a,b]) $
 Bierzemy $ c=\frac{a+b}{2} $ i do następnego kroku bierzemy ten z przedziałów $ [a,c], [c,b] $ dla którego $ f $ ma na końcach różne znaki.
 \paragraph{Błąd} -  W $ n+1 $-szym kroku $ e_{n+1}=\frac12 e_n $.
 Zbieżna globalnie.
-\subsubsection{Metoda Newtona (stycznych)}
+\subsection{Metoda Newtona (stycznych)}
 $ x_0 $ - dane\\
 $ x_{n+1} =x_n-\frac{f(x_n)}{f'(x_n)},\ \ n=0,1,\dots$
 czyli znajdujemy punkt przecięcia stycznej w $ x_n $ z osią $ x $. 
 Jakie założenia chcemy? $ f\in C^1 $ na pewno, jak chcemy kwadratową zbieżność to potrzeba $ f\in C^2 $. Do tego trzeba też $ f'(x) $ w otoczeniu $ x^* $ musi być różna od zera. No i $ x_0 $ musi być dostatecznie blisko $ x^* $. Wtedy metoda jest zbieżna, a błąd to: 
 $$ e_{n+1}=\frac{f''(\xi_n)}{2f'(x_n)}e_n^2, \xi_n \in [x_n, x^*] $$
-\subsubsection{Metoda Herona liczenia pierwiastka}
+\subsection{Metoda Herona liczenia pierwiastka}
 Niech $ a>0, x_0>0 $. 
 $$ x_{n+1}=\frac12(x_n+\frac a{x_n}), x_n \rightarrow \sqrt a $$
 
@@ -1280,8 +1280,58 @@ Jest to metoda Newtona dla $ f(x)=x^2-a $, i jest zbieżna globalnie.
 	Wtedy $ e_{n+1}>0 $, czyli $ x>x^* $, stąd $ f(x_{n+1})>f(x^*)=0 $, zatem $ x_{n+1}<x_n $, czyli $ x_n $ jest ciągiem ograniczonym z dołu i ograniczonym, czyli zbieżnym.
 \end{proof}
 \subsection{Jak policzyć $\frac{1}{R}$ dla $ R>0 $ nie umiejąc dzielić?}
-$ x-\frac1R $ - zbiega szybko, ale nic nie daje bo trzeba dzielić
+$ x-\frac1R $ - zbiega szybko, ale nic nie daje bo trzeba dzielić\\
 $ R-\frac1x $, $ f(\frac1R)=0 $, $ f'(x)=-\frac1{x^2} $
-$ x_{n+1} = x_n=\frac{\frac{1}{x_n}-R}{-\frac{1}{x^2_n}}=2x_n-Rx_n^2=x_n(2-Rx_n)$
+$$ x_{n+1} = x_n=\frac{\frac{1}{x_n}-R}{-\frac{1}{x^2_n}}=2x_n-Rx_n^2=x_n(2-Rx_n)$$
+\paragraph{Jak wybierać $ x_0 $?}
+Błąd względny: $ |e_n|=|\frac{x_n-\frac1R}{\frac1R}|=|Rx_n-1| $
+\begin{align*}
+	Rx_{n+1}&=Rx_n+Rx_n(1-Rx_n)\\
+	Rx_{n+1}-1&=Rx_n-1+Rx_n(1-Rx_n) = (Rx_n-1)(1-Rx_n)\\
+	|Rx_{n+1}|&=|Rx_n-1|^2=|Rx_0-1|^{2^n+1}
+\end{align*}
+Błąd jest zbieżny do 0 gdy $ |Rx_0-1|<1 $, zatem $ x_0\in(0, \frac2R) $.\\
+Ale co z tego skoro nie umiemy policzyć $ \frac2R $? W $ fl $-u to nie przeszkadza.
+$$ R= m2^c, m\in[1,2)$$
+$$\frac1R=\frac1{m2^c}=\frac1m2^{-c}$$
+Zatem zmieniamy zadanie na znalezienie $ \frac1m $, czyli $ x_0\in(0,1) $.
+\subsubsection{Zadanie}
+Ile iteracji metody Newtona potrzeba aby startując z $ x_0:|Rx_0-1|=\gamma<1 $ uzyskać wynik z dokładnością $ \varepsilon<1 $ (błąd względny).
+\begin{proof}[Rozwiązanie]
+	\begin{align*}
+		|Rx_n-1|&\le\varepsilon\\
+		|Rx_0-1|^{2^n}=\gamma^{2^n}&\le\varepsilon\\
+		2^n\log\gamma&\le\log\varepsilon\\
+		2^n&\ge\frac{\log\varepsilon}{\log\gamma}\\
+		n&\ge\log_2\frac{\log\varepsilon}{\log\gamma}
+	\end{align*}
+	
+\end{proof}
+\subsection{Co jeśli pochodne są zerowe?}
+Jeśłi $ f  $ ma $ m $-krotne miejsce zerowe w $ x^* $, to metoda Newtona daje ciąg zbieżny liniowo do $ x^* $ (dla $ x_0 $ dostatecznie bliskiego $ x^* $) oraz $ e_{n+1}=\frac{m-1}{m}e_n+O(e_n^2) $.
+Okazuje się także, że jeśli zmodyfikujemy metodę Newtona do $ x_{n+1}=x_nm\frac{f(x_n)}{f'(x_n)} $, to zbieżność jest znów kwadratowa
 
+\subsection{Co jeśli pochodna nie jest zerowa, ale druga już tak?}
+Jeśli w miejscu zerowym pochodna nie jest zerowa, to mamy zbieżność kwadratową. Jeśli na dodatek druga jest zerem, to zbieżność jest już kubiczna.
+\subsection{Co jeśli nie ma pochodnej w miejscu zerowym?}
+$$ f(x) =sgn(x)\sqrt{|x|}$$
+Funkcja jest ciągła, miejsce zerowe jest w zerze.
+$$f'(x)-\bigg\{\begin{matrix}
+	\frac{1}{2\sqrt x} & x>0\\
+	\frac{1}{2\sqrt {-x}} & x<0
+\end{matrix}=\frac{1}{2\sqrt{|x|}}$$
+Metoda newtona:
+$ x_{n+1}=x_n-\frac{sgn(x_n)\sqrt{x_n}}{\frac{1}{2\sqrt{|x_n|}}}=x_n-sgn(x_n)2|x_n|=x_n-2x_n=-x_n $
+\section{Twierdzenie Banacha o punkcie stałym}
+Jeśli:
+\begin{enumerate}
+	\item $ F:D \rightarrow D $
+	\item $F$ jest kontrakcją: $ \exists_{L\in(0,1)}\forall_{x, y\in D|F(x)-F(y)|\le L|x-y|} $
+\end{enumerate}
+To metoda iteracji prostych daje ciąg zbieżny do jedynego punktu stałego w $ D $ dla dowolnego $ x_0\in D $.
+\subsection{szybkość zbieżności}
+$ F\in C^q $
+$ e_n=F(x_n)-s$
+$F'(s)=F''(s)=\dots=F^{(q-1)}=0, F^{(q)}\not=0$
+Wtedy $ e_{n+1}=\frac{1}{q!}F^{(q)}(\xi_n)e_n^q $
 \end{document}
